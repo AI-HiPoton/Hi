@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>های فوتون | Hi Photon</title>
+<script>
+  var EJS_SERVICE='service_0c18x07';
+  var EJS_TEMPLATE='template_x1yta8';
+  var EJS_KEY='iCIn hOTt8FZ92BKW';
+  var ADMIN_EMAIL='m.ebrahimnajafi1414@gmail.com';
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" 
+  onload="try{emailjs.init({publicKey:EJS_KEY});}catch(e){console.warn('EmailJS not ready')}"
+  onerror="console.warn('EmailJS CDN failed')"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ── ROOT ── */
+:root{
+  --bg:#03030a;--panel:rgba(14,14,44,0.82);
+  --ph:#6ee7ff;--pl:#a78bfa;--fl:#f0abfc;
+  --tx:#e8eaf6;--mu:#7b83b0;--br:rgba(110,231,255,0.13);
+  --glow:0 0 40px rgba(110,231,255,0.18);--rd:16px;
+}
+[data-theme="light"]{
+  --bg:#eef2ff;--panel:rgba(225,232,255,0.9);
+  --tx:#0f1030;--mu:#4a5080;--br:rgba(80,80,200,0.18);
+  --ph:#0077cc;--pl:#6d28d9;--fl:#a21caf;
+  --glow:0 0 30px rgba(0,120,220,0.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;transition:background .4s,color .4s;}
+#bgc{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* ═══════════ NAV ═══════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;
+  background:rgba(3,3,10,0.72);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--br);
+  transition:background .4s;
+}
+[data-theme="light"] nav{background:rgba(238,242,255,0.82);}
+
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer;}
+.nav-logo-text{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;
+  background:linear-gradient(90deg,var(--ph),var(--pl));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+.nav-r{display:flex;align-items:center;gap:7px;}
+
+/* Energy pill */
+.n-energy{
+  display:flex;align-items:center;gap:6px;
+  background:var(--panel);border:1px solid var(--br);
+  border-radius:20px;padding:5px 10px 5px 6px;
+  cursor:pointer;transition:border-color .3s,box-shadow .3s;position:relative;
+}
+.n-energy:hover{border-color:var(--ph);box-shadow:0 0 12px rgba(110,231,255,.15);}
+.n-energy-ring{position:relative;width:26px;height:26px;flex-shrink:0;}
+.n-energy-ring svg{position:absolute;inset:0;width:26px;height:26px;}
+.n-ering-bg{fill:none;stroke:rgba(110,231,255,.12);stroke-width:3;}
+.n-ering-fill{fill:none;stroke:var(--ph);stroke-width:3;stroke-dasharray:63.6;stroke-dashoffset:63.6;stroke-linecap:round;transform:rotate(-90deg);transform-origin:13px 13px;transition:stroke-dashoffset .7s ease,stroke .4s;}
+.n-bolt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;}
+.n-energy-txt{font-family:'Space Grotesk',sans-serif;font-size:.66rem;color:var(--ph);font-weight:600;white-space:nowrap;}
+
+/* Icon buttons */
+.n-btn{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--panel);border:1px solid var(--br);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--mu);position:relative;
+  transition:color .3s,border-color .3s,box-shadow .3s;
+  flex-shrink:0;
+}
+.n-btn:hover{color:var(--ph);border-color:var(--ph);box-shadow:0 0 10px rgba(110,231,255,.14);}
+.n-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* Notification dot */
+.notif-dot{
+  position:absolute;top:4px;right:4px;
+  width:7px;height:7px;border-radius:50%;
+  background:#f43f5e;box-shadow:0 0 5px #f43f5e;
+  border:1.5px solid var(--bg);
+  display:none;animation:nPulse 1.8s infinite;
+}
+.notif-dot.on{display:block;}
+@keyframes nPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.4);opacity:.7;}}
+
+/* Theme toggle */
+.n-theme .icon-sun{display:none;}
+.n-theme .icon-moon{display:flex;}
+[data-theme="light"] .n-theme .icon-sun{display:flex;}
+[data-theme="light"] .n-theme .icon-moon{display:none;}
+
+/* Share button */
+.n-share{
+  display:flex;align-items:center;gap:5px;
+  background:linear-gradient(135deg,rgba(110,231,255,.1),rgba(167,139,250,.1));
+  border:1px solid var(--br);border-radius:18px;
+  padding:6px 11px 6px 9px;cursor:pointer;
+  color:var(--tx);font-family:'Vazirmatn',sans-serif;font-size:.75rem;font-weight:600;
+  transition:border-color .3s,transform .2s;flex-shrink:0;
+}
+.n-share:hover{border-color:var(--pl);transform:translateY(-1px);}
+.n-share svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.n-share-label{display:none;}
+@media(min-width:500px){.n-share-label{display:inline;}}
+
+/* Profile pill */
+.n-profile{
+  display:flex;align-items:center;gap:7px;
+  background:linear-gradient(135deg,rgba(192,132,252,.12),rgba(109,40,217,.12));
+  border:1px solid rgba(168,85,247,.28);
+  border-radius:22px;padding:4px 12px 4px 5px;
+  cursor:default;
+  transition:border-color .3s,box-shadow .3s;
+}
+.n-profile:hover{border-color:rgba(192,132,252,.5);box-shadow:0 0 16px rgba(168,85,247,.2);}
+.n-profile-icon{display:block;flex-shrink:0;}
+.n-profile-phone{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.68rem;color:#c084fc;font-weight:600;
+  letter-spacing:.02em;white-space:nowrap;
+  direction:ltr;
+}
+@media(max-width:420px){
+  .n-profile-phone{display:none;}
+  .n-profile{padding:4px 5px;}
+}
+
+/* Notification panel */
+.notif-wrap{position:relative;}
+.notif-panel{
+  position:fixed;
+  top:62px;
+  right:12px;
+  left:auto;
+  transform:none;
+  width:min(300px,calc(100vw - 24px));
+  background:rgba(6,6,22,.97);border:1px solid var(--br);border-radius:16px;
+  overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5);
+  display:none;z-index:999;
+}
+[data-theme="light"] .notif-panel{background:rgba(238,242,255,.99);}
+.notif-panel.open{display:block;animation:slideD .22s ease;}
+@keyframes slideD{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+.np-head{padding:12px 16px;font-size:.82rem;font-weight:700;color:var(--ph);border-bottom:1px solid var(--br);}
+.np-list{max-height:250px;overflow-y:auto;padding:4px 0;}
+.np-list::-webkit-scrollbar{width:3px;}
+.np-list::-webkit-scrollbar-thumb{background:var(--br);border-radius:3px;}
+.np-item{display:flex;gap:9px;align-items:flex-start;padding:10px 14px;border-bottom:1px solid var(--br);animation:fadeUp .25s ease;}
+.np-item:last-child{border-bottom:none;}
+.np-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+.np-text{font-size:.78rem;color:var(--tx);line-height:1.5;}
+.np-time{font-size:.65rem;color:var(--mu);margin-top:2px;}
+.np-empty{padding:18px;text-align:center;color:var(--mu);font-size:.8rem;}
+
+/* ═══════════ SHARE MODAL ═══════════ */
+.overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;}
+.overlay.open{display:flex;}
+.modal-box{position:relative;width:min(460px,100%);background:rgba(5,5,20,.98);border:1px solid var(--br);border-radius:24px;padding:36px 30px;backdrop-filter:blur(24px);box-shadow:0 40px 80px rgba(0,0,0,.6);animation:mIn .35s cubic-bezier(.34,1.56,.64,1);}
+[data-theme="light"] .modal-box{background:rgba(238,242,255,.99);}
+@keyframes mIn{from{opacity:0;transform:scale(.86) translateY(22px);}to{opacity:1;transform:none;}}
+.modal-box::before{content:'';position:absolute;inset:0;border-radius:24px;background:radial-gradient(circle at 50% 0%,rgba(110,231,255,.07),transparent 60%);pointer-events:none;}
+.m-close{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.06);border:1px solid var(--br);border-radius:8px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--mu);font-size:.85rem;}
+.m-close:hover{color:var(--tx);}
+
+#share-modal .share-url-box{display:flex;gap:8px;background:rgba(255,255,255,.05);border:1px solid var(--br);border-radius:11px;padding:9px 13px;margin-bottom:16px;align-items:center;}
+.share-url-txt{flex:1;font-size:.75rem;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;text-align:left;}
+.share-copy-btn{background:linear-gradient(135deg,var(--ph),var(--pl));color:#03030a;border:none;border-radius:9px;padding:6px 13px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;}
+.share-methods{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;}
+.share-m{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--br);border-radius:13px;padding:12px 8px;cursor:pointer;transition:border-color .3s,transform .2s;}
+.share-m:hover{border-color:var(--ph);transform:translateY(-2px);}
+.share-m-icon{font-size:1.4rem;}
+.share-m-label{font-size:.68rem;color:var(--mu);}
+
+/* ═══════════ ENERGY MODAL ═══════════ */
+#energy-modal .eorb{width:64px;height:64px;border-radius:50%;margin:0 auto 14px;background:radial-gradient(circle at 38% 35%,#fff,var(--ph) 35%,var(--pl) 70%);box-shadow:0 0 40px var(--ph);animation:orbF 3s ease-in-out infinite;}
+@keyframes orbF{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.emodal-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.estat{background:rgba(110,231,255,.06);border:1px solid var(--br);border-radius:12px;padding:12px 14px;text-align:center;}
+.estat-n{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;background:linear-gradient(90deg,var(--ph),var(--pl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.estat-l{font-size:.68rem;color:var(--mu);margin-top:2px;}
+.ebar-wrap{height:8px;background:rgba(110,231,255,.08);border-radius:8px;overflow:hidden;margin-bottom:5px;}
+.ebar-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--ph),var(--pl));width:0%;transition:width .8s ease;}
+.ebar-label{display:flex;justify-content:space-between;font-size:.68rem;color:var(--mu);margin-bottom:16px;}
+.eempty{background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.2);border-radius:11px;padding:11px 14px;font-size:.78rem;color:var(--pl);text-align:center;margin-bottom:14px;line-height:1.6;}
+.eplans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.eplan{background:rgba(110,231,255,.04);border:1px solid var(--br);border-radius:12px;padding:12px 8px;text-align:center;cursor:pointer;transition:border-color .25s,transform .2s;}
+.eplan:hover,.eplan.sel{border-color:var(--ph);transform:translateY(-2px);}
+.eplan.pop{border-color:var(--pl);background:rgba(167,139,250,.07);}
+.eplan-badge{font-size:.58rem;background:var(--pl);color:#fff;border-radius:7px;padding:1px 6px;margin-bottom:4px;display:inline-block;}
+.eplan-amt{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--ph);}
+.eplan-lbl{font-size:.65rem;color:var(--mu);}
+.eplan-price{font-size:.72rem;color:var(--tx);margin-top:4px;font-weight:600;}
+.ebuy-btn{width:100%;background:linear-gradient(135deg,#00b4d8,#7b2ff7);color:#fff;font-family:'Vazirmatn',sans-serif;font-weight:700;font-size:.92rem;padding:12px;border-radius:13px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.ebuy-btn:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(0,180,255,.3);}
+
+/* ═══════════ PHOTON CREATURE ═══════════ */
+#photon-wrap{position:fixed;z-index:200;left:8px;top:70px;display:flex;align-items:center;pointer-events:none;}
+#photon-canvas{cursor:pointer;display:block;pointer-events:auto;}
+.speech-bub{
+  position:absolute;left:106px;top:50%;transform:translateY(-50%);
+  background:rgba(4,4,18,.93);border:1px solid rgba(0,180,255,.25);
+  border-radius:11px 11px 11px 3px;padding:8px 13px;
+  font-size:.7rem;color:var(--ph);backdrop-filter:blur(14px);
+  pointer-events:none;max-width:170px;line-height:1.5;
+  box-shadow:0 4px 18px rgba(0,0,0,.5);
+  transition:opacity .4s ease;
+}
+[data-theme="light"] .speech-bub{background:rgba(220,232,255,.96);color:#0060bb;border-color:rgba(0,130,220,.25);}
+@media(max-width:480px){.speech-bub{display:none;}}
+
+/* ═══════════ CHATBOT ═══════════ */
+#chatbot{
+  position:fixed;bottom:16px;left:10px;z-index:300;
+  width:min(330px,calc(100vw - 20px));
+  display:none;flex-direction:column;
+  background:rgba(4,4,18,.96);border:1px solid var(--br);
+  border-radius:18px;overflow:hidden;backdrop-filter:blur(22px);
+  box-shadow:0 18px 55px rgba(0,0,0,.6);
+}
+[data-theme="light"] #chatbot{background:rgba(235,240,255,.97);}
+.chat-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--br);background:rgba(0,180,255,.04);}
+.chat-hdr-l{display:flex;align-items:center;gap:8px;}
+.chat-av{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 32%,#fff,var(--ph) 35%,var(--pl) 70%);box-shadow:0 0 10px var(--ph);flex-shrink:0;}
+.chat-title{font-size:.84rem;font-weight:700;color:var(--ph);}
+.chat-status{font-size:.65rem;color:var(--mu);display:flex;align-items:center;gap:4px;}
+.sdot{width:5px;height:5px;border-radius:50%;background:#4ade80;box-shadow:0 0 5px #4ade80;animation:sP 2s infinite;}
+@keyframes sP{0%,100%{opacity:1;}50%{opacity:.4;}}
+.chat-x{background:none;border:none;color:var(--mu);font-size:1rem;cursor:pointer;padding:3px 7px;border-radius:5px;}
+.chat-x:hover{color:var(--tx);}
+.chat-msgs{height:240px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px;scroll-behavior:smooth;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--br);border-radius:3px;}
+.msg{max-width:87%;padding:9px 13px;border-radius:13px;font-size:.82rem;line-height:1.6;animation:fadeUp .25s ease;}
+.msg-bot{background:rgba(0,180,255,.07);border:1px solid rgba(0,200,255,.13);color:var(--tx);align-self:flex-start;border-radius:3px 13px 13px 13px;}
+.msg-user{background:linear-gradient(135deg,#00b4d8,#7b2ff7);color:#fff;align-self:flex-end;border-radius:13px 3px 13px 13px;}
+.msg-typing{display:flex;gap:5px;align-items:center;padding:10px 13px;}
+.msg-typing span{width:6px;height:6px;border-radius:50%;background:var(--ph);animation:td .8s ease-in-out infinite;}
+.msg-typing span:nth-child(2){animation-delay:.15s;}.msg-typing span:nth-child(3){animation-delay:.3s;}
+@keyframes td{0%,80%,100%{transform:scale(.7);opacity:.4;}40%{transform:scale(1.2);opacity:1;}}
+.chat-inp-row{display:flex;gap:7px;padding:0 12px 11px;}
+.chat-inp{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--br);border-radius:11px;padding:9px 12px;color:var(--tx);font-family:'Vazirmatn',sans-serif;font-size:.82rem;outline:none;transition:border-color .3s;}
+.chat-inp:focus{border-color:var(--ph);}
+.chat-send{background:linear-gradient(135deg,#00b4d8,#7b2ff7);border:none;border-radius:10px;padding:9px 13px;color:#fff;font-weight:700;cursor:pointer;font-size:.82rem;}
+
+/* ═══════════ SIGNUP / SURVEY MODAL ═══════════ */
+#signup-modal{max-height:90vh;overflow-y:auto;}
+#signup-modal::-webkit-scrollbar{width:3px;}
+#signup-modal::-webkit-scrollbar-thumb{background:var(--br);border-radius:3px;}
+
+/* Contact form view */
+.v-contact{}
+.modal-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:30px;padding:4px 13px;font-size:.7rem;color:var(--ph);margin-bottom:14px;}
+.modal-title{font-size:clamp(1.3rem,4vw,1.75rem);font-weight:900;margin-bottom:6px;}
+.modal-sub{font-size:.83rem;color:var(--mu);margin-bottom:20px;line-height:1.6;}
+.gift-banner{background:linear-gradient(135deg,rgba(0,200,255,.09),rgba(123,47,247,.09));border:1px solid rgba(0,200,255,.2);border-radius:13px;padding:11px 15px;margin-bottom:20px;display:flex;align-items:center;gap:11px;}
+.gift-icon{font-size:1.6rem;}
+.gift-text h4{font-size:.83rem;font-weight:700;color:var(--ph);margin-bottom:2px;}
+.gift-text p{font-size:.71rem;color:var(--mu);}
+.fg{margin-bottom:13px;}
+.fl{display:block;font-size:.76rem;color:var(--mu);margin-bottom:6px;}
+.fi{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--br);border-radius:11px;padding:11px 14px;color:var(--tx);font-family:'Vazirmatn',sans-serif;font-size:.88rem;outline:none;transition:border-color .3s,box-shadow .3s;}
+.fi:focus{border-color:var(--ph);box-shadow:0 0 0 3px rgba(0,200,255,.09);}
+.fi.err{border-color:#f43f5e;}
+.err-msg{font-size:.7rem;color:#f43f5e;margin-top:3px;display:none;}
+.opt-tag{font-size:.64rem;background:rgba(167,139,250,.15);color:var(--pl);padding:2px 6px;border-radius:7px;margin-right:4px;}
+.submit-btn{width:100%;background:linear-gradient(135deg,#00b4d8,#7b2ff7);color:#fff;font-family:'Vazirmatn',sans-serif;font-weight:700;font-size:.92rem;padding:13px;border-radius:13px;border:none;cursor:pointer;box-shadow:0 0 24px rgba(0,180,255,.2);transition:transform .2s,box-shadow .2s;margin-top:4px;}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(0,180,255,.38);}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+
+/* Survey view */
+.v-survey{display:none;}
+.survey-view-hdr{text-align:center;padding:20px 0 14px;}
+.sv-icon{font-size:2.5rem;margin-bottom:10px;}
+.sv-title{font-size:1.1rem;font-weight:800;margin-bottom:5px;line-height:1.5;}
+.sv-sub{font-size:.78rem;color:var(--mu);line-height:1.6;}
+.sv-prog-wrap{margin-bottom:18px;}
+.sv-prog{height:5px;background:rgba(110,231,255,.1);border-radius:5px;overflow:hidden;}
+.sv-prog-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#00b4d8,#a78bfa);width:0%;transition:width .45s cubic-bezier(.4,0,.2,1);}
+.sv-prog-lbl{display:flex;justify-content:space-between;font-size:.65rem;color:var(--mu);margin-top:4px;}
+.sv-step{display:none;animation:fadeUp .3s ease;}
+.sv-step.active{display:block;}
+.sv-qnum{color:var(--ph);font-weight:700;font-size:.7rem;margin-bottom:5px;letter-spacing:.02em;}
+.sv-qtitle{font-size:1.05rem;font-weight:800;margin-bottom:4px;line-height:1.5;}
+.sv-qdesc{color:var(--mu);font-size:.78rem;margin-bottom:14px;line-height:1.5;}
+.sv-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:6px;}
+.sv-opt{width:100%;text-align:right;padding:11px 14px;border:1.5px solid var(--br);border-radius:12px;background:rgba(255,255,255,.02);cursor:pointer;transition:all .22s;font-size:.84rem;display:flex;align-items:center;gap:10px;color:var(--tx);font-family:'Vazirmatn',sans-serif;}
+.sv-opt:hover{border-color:var(--ph);background:rgba(0,180,255,.05);transform:translateX(-3px);}
+.sv-opt.sel{border-color:var(--ph);background:linear-gradient(135deg,rgba(0,180,255,.1),rgba(123,47,247,.08));font-weight:600;}
+.sv-opt-ic{font-size:1.1rem;min-width:24px;text-align:center;flex-shrink:0;}
+.sv-nav{display:flex;justify-content:space-between;gap:9px;margin-top:18px;}
+.sv-btn{padding:11px 22px;border-radius:12px;font-weight:700;font-size:.86rem;cursor:pointer;transition:all .22s;border:none;font-family:'Vazirmatn',sans-serif;}
+.sv-btn-p{background:linear-gradient(135deg,#00b4d8,#7b2ff7);color:#fff;flex:1;}
+.sv-btn-p:hover{transform:translateY(-2px);box-shadow:0 0 24px rgba(0,180,255,.3);}
+.sv-btn-s{background:rgba(255,255,255,.04);color:var(--mu);border:1px solid var(--br);}
+.sv-btn-s:hover{background:rgba(255,255,255,.08);}
+.sv-skip{text-align:center;margin-top:11px;}
+.sv-skip a{color:var(--mu);font-size:.74rem;text-decoration:underline;cursor:pointer;}
+.sv-note{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:12px;padding:11px 14px;margin-top:14px;text-align:center;font-size:.78rem;color:var(--pl);line-height:1.6;}
+.sv-inp{width:100%;background:rgba(255,255,255,.04);border:1.5px solid var(--br);border-radius:12px;padding:11px 14px;color:var(--tx);font-family:'Vazirmatn',sans-serif;font-size:.86rem;outline:none;transition:border-color .3s;resize:none;}
+.sv-inp:focus{border-color:var(--ph);}
+
+/* Success view */
+.v-success{display:none;text-align:center;padding:12px 0;}
+.success-orb{width:70px;height:70px;border-radius:50%;margin:0 auto 14px;background:radial-gradient(circle at 38% 35%,#fff,var(--ph) 30%,var(--pl) 70%);box-shadow:0 0 36px var(--ph);animation:orbF 3s ease-in-out infinite;}
+.v-success h3{font-size:1.35rem;font-weight:800;margin-bottom:7px;}
+.v-success p{color:var(--mu);font-size:.83rem;line-height:1.6;}
+.gifts{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+.gift-chip{background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.2);border-radius:20px;padding:6px 11px;font-size:.73rem;color:var(--ph);}
+
+/* ═══════════ HERO ═══════════ */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 20px 70px;position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--br);border-radius:30px;padding:7px 17px;font-size:.77rem;color:var(--ph);margin-bottom:26px;backdrop-filter:blur(12px);animation:fadeUp .8s ease both;}
+.bdot{width:7px;height:7px;border-radius:50%;background:var(--ph);box-shadow:0 0 7px var(--ph);animation:bP 2s infinite;}
+@keyframes bP{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.4);}}
+h1.hero-title{font-size:clamp(2.4rem,7vw,5.5rem);font-weight:900;line-height:1.12;margin-bottom:8px;animation:fadeUp .8s .1s ease both;}
+.tg{background:linear-gradient(135deg,var(--ph),var(--pl),var(--fl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-family:'Space Grotesk',sans-serif;font-size:clamp(.92rem,2.5vw,1.4rem);color:var(--mu);margin-bottom:20px;animation:fadeUp .8s .2s ease both;}
+.hero-desc{max-width:580px;font-size:.98rem;line-height:1.85;color:var(--mu);margin-bottom:42px;animation:fadeUp .8s .3s ease both;}
+.hero-cta{display:flex;gap:13px;flex-wrap:wrap;justify-content:center;animation:fadeUp .8s .4s ease both;}
+.btn-p{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--ph),var(--pl));color:#03030a;font-family:'Vazirmatn',sans-serif;font-weight:700;font-size:.95rem;padding:12px 28px;border-radius:30px;border:none;cursor:pointer;box-shadow:0 0 28px rgba(110,231,255,.28);transition:transform .2s,box-shadow .2s;text-decoration:none;}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 0 44px rgba(110,231,255,.5);}
+.btn-g{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--br);color:var(--tx);font-family:'Vazirmatn',sans-serif;font-size:.95rem;padding:12px 28px;border-radius:30px;cursor:pointer;backdrop-filter:blur(12px);transition:border-color .2s;text-decoration:none;}
+.btn-g:hover{border-color:var(--ph);}
+.stats-bar{display:flex;background:var(--panel);border:1px solid var(--br);border-radius:var(--rd);overflow:hidden;margin-top:52px;backdrop-filter:blur(12px);animation:fadeUp .8s .5s ease both;}
+.stat{flex:1;padding:18px 14px;text-align:center;border-left:1px solid var(--br);}
+.stat:last-child{border-left:none;}
+.stat-n{font-family:'Space Grotesk',sans-serif;font-size:1.75rem;font-weight:700;background:linear-gradient(90deg,var(--ph),var(--pl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.stat-l{font-size:.7rem;color:var(--mu);margin-top:3px;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
+
+/* ═══════════ SECTIONS ═══════════ */
+section{position:relative;z-index:1;}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.sh{text-align:center;margin-bottom:52px;}
+.sey{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ph);margin-bottom:10px;}
+.st{font-size:clamp(1.65rem,3.5vw,2.7rem);font-weight:800;line-height:1.2;}
+.sd{color:var(--mu);margin-top:10px;font-size:.95rem;}
+
+/* Features */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;}
+.fc{background:var(--panel);border:1px solid var(--br);border-radius:var(--rd);padding:24px;backdrop-filter:blur(12px);transition:border-color .3s,transform .3s,box-shadow .3s;position:relative;overflow:hidden;}
+.fc::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(110,231,255,.05),transparent 60%);pointer-events:none;}
+.fc:hover{border-color:var(--ph);transform:translateY(-3px);box-shadow:var(--glow);}
+.fi-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:14px;background:linear-gradient(135deg,rgba(110,231,255,.12),rgba(167,139,250,.12));border:1px solid var(--br);}
+.ft{font-size:1.02rem;font-weight:700;margin-bottom:7px;}
+.fd{font-size:.83rem;color:var(--mu);line-height:1.7;}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;}
+.step{display:flex;gap:16px;align-items:flex-start;padding:22px 0;border-bottom:1px solid var(--br);}
+.step:last-child{border-bottom:none;}
+.sn{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--br);min-width:44px;line-height:1;}
+.si{font-size:1.5rem;min-width:38px;text-align:center;}
+.step-t h3{font-size:1.02rem;font-weight:700;margin-bottom:4px;}
+.step-t p{font-size:.83rem;color:var(--mu);line-height:1.7;}
+
+/* Value */
+.vgrid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;}
+@media(max-width:700px){.vgrid{grid-template-columns:1fr;}}
+.vi{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--br);border-radius:var(--rd);padding:15px 18px;backdrop-filter:blur(12px);transition:border-color .3s;margin-bottom:12px;}
+.vi:hover{border-color:var(--pl);}
+.vi-icon{font-size:1.2rem;min-width:30px;}
+.vi-t h4{font-weight:700;margin-bottom:2px;}
+.vi-t p{font-size:.79rem;color:var(--mu);}
+.v-orb{width:90px;height:90px;border-radius:50%;margin:0 auto 14px;background:radial-gradient(circle at 38% 35%,#fff,var(--ph) 30%,var(--pl) 65%);box-shadow:0 0 50px var(--ph);animation:orbF 4s ease-in-out infinite;}
+.vvis{background:var(--panel);border:1px solid var(--br);border-radius:20px;padding:30px;backdrop-filter:blur(12px);text-align:center;position:relative;overflow:hidden;}
+.vvis::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(167,139,250,.07),transparent 70%);}
+
+/* Compare */
+.ctable{width:100%;border-collapse:collapse;background:var(--panel);backdrop-filter:blur(12px);border-radius:var(--rd);overflow:hidden;border:1px solid var(--br);}
+.ctable th,.ctable td{padding:12px 18px;text-align:center;font-size:.83rem;}
+.ctable th{background:rgba(110,231,255,.05);font-weight:700;color:var(--ph);}
+.ctable td:first-child{text-align:right;color:var(--tx);font-weight:500;}
+.ctable tr{border-bottom:1px solid var(--br);}
+.ctable tr:last-child{border-bottom:none;}
+.ctable tr:hover{background:rgba(110,231,255,.02);}
+.ck{color:var(--ph);}.cr{color:var(--mu);}
+
+/* Footer */
+footer{padding:38px 20px;border-top:1px solid var(--br);text-align:center;color:var(--mu);font-size:.79rem;position:relative;z-index:1;}
+.flogo{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;background:linear-gradient(90deg,var(--ph),var(--pl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;}
+
+@media(max-width:480px){
+  nav{height:50px;padding:0 10px;}
+  .n-r{gap:5px;}
+  .n-btn{width:30px;height:30px;}
+  .stats-bar{flex-direction:column;}
+  .stat{border-left:none;border-bottom:1px solid var(--br);}
+  .stat:last-child{border-bottom:none;}
+  .eplans{grid-template-columns:1fr;}
+  #photon-wrap{left:4px;}
+}
+
+.np-dismiss{
+  background:none;border:none;
+  color:var(--mu);font-size:.85rem;
+  cursor:pointer;padding:2px 6px;border-radius:6px;
+  flex-shrink:0;transition:color .2s,background .2s;
+  line-height:1;margin-top:1px;
+}
+.np-dismiss:hover{color:#4ade80;background:rgba(74,222,128,.1);}
+.np-read{opacity:.55;}
+.np-read .np-dismiss{color:#4ade80;}
+
+/* ═══════════ OTHER ANSWER MODAL ═══════════ */
+#otherModal{
+  display:none;position:fixed;inset:0;z-index:600;
+  background:rgba(0,0,0,.65);backdrop-filter:blur(10px);
+  align-items:center;justify-content:center;padding:20px;
+}
+#otherModal.open{display:flex;animation:fadeIn .22s ease;}
+.other-modal-box{
+  width:min(500px,100%);
+  background:rgba(5,5,22,.98);
+  border:1px solid rgba(110,231,255,.22);
+  border-radius:24px;padding:38px 36px 30px;
+  box-shadow:0 40px 100px rgba(0,0,0,.65),0 0 60px rgba(110,231,255,.07),inset 0 1px 0 rgba(255,255,255,.05);
+  animation:mIn .32s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+}
+[data-theme="light"] .other-modal-box{background:rgba(240,244,255,.99);border-color:rgba(0,120,200,.18);}
+.other-modal-icon{font-size:2rem;text-align:center;margin-bottom:10px;}
+.other-modal-title{font-size:1.1rem;font-weight:800;text-align:center;margin-bottom:5px;color:var(--tx);}
+.other-modal-sub{font-size:.78rem;color:var(--mu);text-align:center;margin-bottom:20px;line-height:1.5;}
+.other-modal-textarea{
+  width:100%;
+  background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(110,231,255,.2);
+  border-radius:16px;
+  padding:16px 18px;
+  color:var(--tx);
+  font-family:'Vazirmatn',sans-serif;
+  font-size:.92rem;
+  outline:none;
+  resize:none;
+  min-height:130px;
+  line-height:1.9;
+  transition:border-color .3s,box-shadow .3s,background .3s;
+  display:block;
+  letter-spacing:.01em;
+}
+.other-modal-textarea:focus{
+  border-color:var(--ph);
+  background:rgba(110,231,255,.03);
+  box-shadow:0 0 0 4px rgba(110,231,255,.09),0 4px 20px rgba(0,0,0,.15);
+}
+[data-theme="light"] .other-modal-textarea{background:rgba(0,0,100,.03);}
+[data-theme="light"] .other-modal-textarea:focus{background:rgba(0,100,200,.04);}
+.other-modal-char{font-size:.68rem;color:var(--mu);text-align:left;margin-top:5px;margin-bottom:18px;}
+.other-modal-btns{display:flex;gap:10px;}
+.other-modal-confirm{
+  flex:1;background:linear-gradient(135deg,#00b4d8,#7b2ff7);
+  color:#fff;border:none;border-radius:13px;
+  padding:13px 20px;font-size:.9rem;font-weight:700;
+  cursor:pointer;font-family:'Vazirmatn',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  transition:transform .2s,box-shadow .2s;
+}
+.other-modal-confirm:hover{transform:translateY(-2px);box-shadow:0 0 24px rgba(0,180,255,.3);}
+.other-modal-cancel{
+  background:rgba(255,255,255,.05);border:1px solid var(--br);
+  border-radius:13px;padding:13px 18px;font-size:.86rem;
+  color:var(--mu);cursor:pointer;font-family:'Vazirmatn',sans-serif;
+  transition:background .2s;
+}
+.other-modal-cancel:hover{background:rgba(255,255,255,.09);}
+
+
+/* ─── Profile Pill ─── */
+#nProfile{
+  display:none;align-items:center;gap:7px;
+  background:linear-gradient(135deg,rgba(167,139,250,.1),rgba(110,231,255,.06));
+  border:1px solid rgba(167,139,250,.28);
+  border-radius:22px;padding:4px 11px 4px 4px;
+  cursor:default;transition:border-color .3s,box-shadow .3s;
+  flex-shrink:0;max-width:160px;
+}
+#nProfile:hover{border-color:rgba(167,139,250,.55);box-shadow:0 0 16px rgba(167,139,250,.18);}
+.nprof-face{width:26px;height:26px;flex-shrink:0;}
+.n-profile-icon{flex-shrink:0;display:block;}
+.nprof-phone{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.65rem;color:var(--tx);
+  letter-spacing:.02em;direction:ltr;
+  text-align:left;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap;
+}
+@media(max-width:480px){
+  #nProfile{max-width:120px;}
+  .nprof-phone{font-size:.6rem;}
+}
+
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- Background canvas -->
+<canvas id="bgc"></canvas>
+
+<!-- Hidden SVG defs for energy ring gradient -->
+<svg width="0" height="0" style="position:absolute;pointer-events:none;">
+  <defs>
+    <linearGradient id="eGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00b4d8"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 30 30" width="26" height="26" fill="none">
+      <circle cx="15" cy="15" r="9" fill="url(#lg1)" opacity=".92"/>
+      <circle cx="15" cy="15" r="5.5" fill="url(#lg2)"/>
+      <circle cx="12.5" cy="12.5" r="2.2" fill="white" opacity=".88"/>
+      <defs>
+        <radialGradient id="lg1" cx="40%" cy="35%"><stop offset="0%" stop-color="#6ee7ff"/><stop offset="100%" stop-color="#a78bfa"/></radialGradient>
+        <radialGradient id="lg2" cx="40%" cy="35%"><stop offset="0%" stop-color="white"/><stop offset="100%" stop-color="#6ee7ff"/></radialGradient>
+      </defs>
+    </svg>
+    <span class="nav-logo-text">Hi Photon</span>
+  </div>
+
+  <div class="nav-r">
+    <!-- Energy -->
+    <div class="n-energy" onclick="openEnergyModal()" title="انرژی شما">
+      <div class="n-energy-ring">
+        <svg viewBox="0 0 26 26"><circle class="n-ering-bg" cx="13" cy="13" r="10"/><circle class="n-ering-fill" id="eRingFill" cx="13" cy="13" r="10"/></svg>
+        <div class="n-bolt">⚡</div>
+      </div>
+      <span class="n-energy-txt" id="eNavTxt"></span>
+    </div>
+
+    <!-- Notification -->
+    <div class="notif-wrap" id="notifWrap">
+      <button class="n-btn" id="notifBtn" onclick="toggleNotif()">
+        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notif-dot" id="notifDot"></span>
+      </button>
+      <div class="notif-panel" id="notifPanel">
+        <div class="np-head">🔔 اعلان‌ها</div>
+        <div class="np-list" id="notifList"><div class="np-empty">هنوز اعلانی ندارید</div></div>
+      </div>
+    </div>
+
+    <!-- Profile pill (shown after login) -->
+
+
+    <!-- Theme -->
+    <button class="n-btn n-theme" id="themeBtn" onclick="toggleTheme()">
+      <span class="icon-sun">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </span>
+      <span class="icon-moon">
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </span>
+    </button>
+
+    <!-- Profile pill (shown after login) -->
+    <div class="n-profile" id="nProfile" style="display:none" title="پروفایل شما">
+      <!-- Photon mini orb — same design language as main canvas -->
+      <svg class="n-profile-icon" viewBox="0 0 44 44" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Outer wide aura -->
+          <radialGradient id="pillAura" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="rgba(83,245,255,0.18)"/>
+            <stop offset="60%"  stop-color="rgba(83,245,255,0.06)"/>
+            <stop offset="100%" stop-color="rgba(83,245,255,0)"/>
+          </radialGradient>
+          <!-- Ring glow band -->
+          <radialGradient id="pillBand" cx="50%" cy="50%" r="50%">
+            <stop offset="62%"  stop-color="rgba(83,245,255,0)"/>
+            <stop offset="75%"  stop-color="rgba(83,245,255,0.30)"/>
+            <stop offset="83%"  stop-color="rgba(83,245,255,0.50)"/>
+            <stop offset="92%"  stop-color="rgba(40,200,255,0.22)"/>
+            <stop offset="100%" stop-color="rgba(0,140,255,0)"/>
+          </radialGradient>
+          <!-- Eye glow -->
+          <radialGradient id="pillEyeL" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="rgba(210,252,255,0.95)"/>
+            <stop offset="50%"  stop-color="rgba(83,245,255,0.80)"/>
+            <stop offset="100%" stop-color="rgba(83,245,255,0)"/>
+          </radialGradient>
+          <radialGradient id="pillEyeR" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="rgba(210,252,255,0.95)"/>
+            <stop offset="50%"  stop-color="rgba(83,245,255,0.80)"/>
+            <stop offset="100%" stop-color="rgba(83,245,255,0)"/>
+          </radialGradient>
+          <!-- Glow filter for ring line -->
+          <filter id="pillGlow" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- CSS animation -->
+          <style>
+            .pill-orb{animation:pillBreathe 3s ease-in-out infinite;}
+            @keyframes pillBreathe{0%,100%{opacity:.82}50%{opacity:1}}
+            .pill-eye-l{animation:pillEyeL 1.75s ease-in-out infinite;}
+            .pill-eye-r{animation:pillEyeR 1.75s ease-in-out infinite;}
+            @keyframes pillEyeL{0%{opacity:.35}20%{opacity:1}50%{opacity:.35}100%{opacity:.35}}
+            @keyframes pillEyeR{0%{opacity:.35}50%{opacity:.35}70%{opacity:1}100%{opacity:.35}}
+          </style>
+        </defs>
+        <!-- aura -->
+        <circle cx="22" cy="22" r="21" fill="url(#pillAura)"/>
+        <!-- glow band -->
+        <circle cx="22" cy="22" r="21" fill="url(#pillBand)"/>
+        <!-- pure black center -->
+        <circle cx="22" cy="22" r="16.5" fill="#000000"/>
+        <!-- crisp ring line with glow filter -->
+        <circle cx="22" cy="22" r="18.5" fill="none"
+                stroke="rgba(83,245,255,0.90)" stroke-width="1.8"
+                filter="url(#pillGlow)" class="pill-orb"/>
+        <!-- soft outer ring -->
+        <circle cx="22" cy="22" r="18.5" fill="none"
+                stroke="rgba(83,245,255,0.22)" stroke-width="5.5"/>
+        <!-- left eye with halo -->
+        <circle cx="17.2" cy="21.5" r="4.5" fill="url(#pillEyeL)" class="pill-eye-l"/>
+        <circle cx="17.2" cy="21.5" r="1.6" fill="rgba(210,252,255,0.95)"/>
+        <!-- right eye with halo -->
+        <circle cx="26.8" cy="21.5" r="4.5" fill="url(#pillEyeR)" class="pill-eye-r"/>
+        <circle cx="26.8" cy="21.5" r="1.6" fill="rgba(210,252,255,0.95)"/>
+        <!-- smile -->
+        <path d="M15.8 26.2 Q22 31.2 28.2 26.2"
+              stroke="rgba(83,245,255,0.72)" stroke-width="1.6"
+              fill="none" stroke-linecap="round" class="pill-orb"/>
+      </svg>
+      <span class="n-profile-phone" id="nProfilePhone">۰۹۱۲...</span>
+    </div>
+
+    <!-- Share -->
+    <button class="n-share" onclick="openShare()">
+      <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      <span class="n-share-label">دعوت</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════ PHOTON CREATURE ═══════ -->
+<div id="photon-wrap">
+  <canvas id="photon-canvas" onclick="toggleChat()" title="با فوتون صحبت کن!" style="display:block;"></canvas>
+  <div class="speech-bub" id="speechBub">سلام! من فوتونم 👋</div>
+</div>
+
+<!-- ═══════ CHATBOT ═══════ -->
+<div id="chatbot">
+  <div class="chat-hdr">
+    <div class="chat-hdr-l">
+      <div class="chat-av"></div>
+      <div>
+        <div class="chat-title">فوتون — دستیار هوشمند</div>
+        <div class="chat-status"><span class="sdot"></span>آنلاین</div>
+      </div>
+    </div>
+    <button class="chat-x" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs"></div>
+  <div class="chat-inp-row">
+    <input class="chat-inp" id="chatInp" placeholder="سوال بپرسید..." onkeydown="if(event.key==='Enter')sendMsg()"/>
+    <button class="chat-send" onclick="sendMsg()">ارسال</button>
+  </div>
+</div>
+
+<!-- ═══════ ENERGY MODAL ═══════ -->
+<div class="overlay" id="energy-overlay" onclick="if(event.target===this)closeEnergyModal()">
+  <div class="modal-box">
+    <button class="m-close" onclick="closeEnergyModal()">✕</button>
+    <div style="text-align:center;">
+      <div class="eorb"></div>
+      <div style="font-size:1.2rem;font-weight:800;margin-bottom:5px;">⚡ انرژی های فوتون</div>
+      <div style="font-size:.8rem;color:var(--mu);margin-bottom:18px;">انرژی واحد پردازش جستجوی هوشمند شماست</div>
+    </div>
+    <div class="emodal-stats">
+      <div class="estat"><div class="estat-n" id="eUsed">۰</div><div class="estat-l">مصرف شده</div></div>
+      <div class="estat"><div class="estat-n" id="eLeft">۰</div><div class="estat-l">باقی‌مانده</div></div>
+    </div>
+    <div class="ebar-wrap"><div class="ebar-fill" id="eBarFill"></div></div>
+    <div class="ebar-label"><span id="ePct">۰٪</span><span id="eTotal">۰ / ۱۰۰</span></div>
+    <div class="eempty" id="eEmptyNote">🎁 بعد از ثبت‌نام در پیش‌لانچ <strong>۱۰۰ واحد انرژی رایگان</strong> دریافت می‌کنید!</div>
+    <div style="font-size:.78rem;color:var(--mu);margin-bottom:10px;text-align:center;">خرید اعتبار بیشتر:</div>
+    <div class="eplans">
+      <div class="eplan" onclick="selPlan(this,100,'رایگان')"><div class="eplan-amt">۱۰۰</div><div class="eplan-lbl">واحد</div><div class="eplan-price" style="color:var(--ph)">رایگان</div></div>
+      <div class="eplan pop" onclick="selPlan(this,500,'۴۹,۰۰۰')"><div class="eplan-badge">پرطرفدار</div><div class="eplan-amt">۵۰۰</div><div class="eplan-lbl">واحد</div><div class="eplan-price">۴۹,۰۰۰ تومان</div></div>
+      <div class="eplan" onclick="selPlan(this,2000,'۱۴۹,۰۰۰')"><div class="eplan-amt">۲K</div><div class="eplan-lbl">واحد</div><div class="eplan-price">۱۴۹,۰۰۰ تومان</div></div>
+    </div>
+    <button class="ebuy-btn" id="eBuyBtn" onclick="closeEnergyModal();openModal()">✨ ثبت‌نام و دریافت ۱۰۰ واحد رایگان</button>
+  </div>
+</div>
+
+<!-- ═══════ SIGNUP / SURVEY MODAL ═══════ -->
+<div class="overlay" id="signup-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box" id="signup-modal">
+    <button class="m-close" onclick="closeModal()">✕</button>
+
+    <!-- Contact form -->
+    <div class="v-contact" id="vContact">
+      <div class="modal-badge">🚀 پیش‌لانچ</div>
+      <h2 class="modal-title">اولین باشید! <span class="tg">✨</span></h2>
+      <p class="modal-sub">شماره موبایل کافیه — در ۱۰ ثانیه ثبت‌نام کنید.</p>
+      <div class="gift-banner">
+        <div class="gift-icon">🎁</div>
+        <div class="gift-text"><h4>هدیه: ۱۰۰ واحد انرژی رایگان</h4><p>تمام امکانات پریمیوم برای یک ماه — کاملاً رایگان</p></div>
+      </div>
+      <div class="fg"><label class="fl" for="mphone">📱 شماره موبایل <span style="color:#f43f5e">*</span></label><input class="fi" id="mphone" type="tel" placeholder="۰۹۱۲ ۳۴۵ ۶۷۸۹" dir="ltr" inputmode="tel"/><div class="err-msg" id="phoneErr">لطفاً شماره معتبر وارد کنید</div></div>
+      <div class="fg"><label class="fl" for="memail">✉️ ایمیل <span class="opt-tag">اختیاری</span></label><input class="fi" id="memail" type="email" placeholder="you@example.com" dir="ltr"/></div>
+      <div class="fg"><label class="fl" for="mname">👤 نام <span class="opt-tag">اختیاری</span></label><input class="fi" id="mname" type="text" placeholder="مثلاً: علی"/></div>
+      <button class="submit-btn" id="submitBtn" onclick="doSignup()">🎁 ثبت‌نام و دریافت انرژی رایگان</button>
+    </div>
+
+    <!-- Survey -->
+    <div class="v-survey" id="vSurvey">
+      <div class="survey-view-hdr">
+        <div class="sv-icon">🌟</div>
+        <div class="sv-title">با پاسخ به چند سوال کوتاه،<br>ما را در بهبود عملکرد فوتون همیاری کنید</div>
+        <div class="sv-sub">پاسخ‌های شما مستقیماً روی توسعه فوتون تأثیر می‌گذارد</div>
+      </div>
+      <div class="sv-prog-wrap">
+        <div class="sv-prog"><div class="sv-prog-fill" id="svFill"></div></div>
+        <div class="sv-prog-lbl"><span id="svLbl">سوال ۱ از ۷</span><span id="svPct">۱۴٪</span></div>
+      </div>
+
+      <div class="sv-step active" id="s1">
+        <div class="sv-qnum">سوال ۱ از ۷</div>
+        <div class="sv-qtitle">🔍 بیشتر دنبال چی می‌گردی؟</div>
+        <div class="sv-qdesc">می‌تونی چند گزینه انتخاب کنی</div>
+        <div class="sv-opts">
+          <button class="sv-opt" data-q="1" data-v="محصولات دیجیتال" onclick="svMulti(this)"><span class="sv-opt-ic">📱</span>محصولات دیجیتال (گوشی، لپ‌تاپ)</button>
+          <button class="sv-opt" data-q="1" data-v="ملک" onclick="svMulti(this)"><span class="sv-opt-ic">🏠</span>ملک و املاک (خونه، رهن، اجاره)</button>
+          <button class="sv-opt" data-q="1" data-v="خودرو" onclick="svMulti(this)"><span class="sv-opt-ic">🚗</span>خودرو (ماشین، موتور)</button>
+          <button class="sv-opt" data-q="1" data-v="خدمات" onclick="svMulti(this)"><span class="sv-opt-ic">🛠️</span>خدمات و متخصصین</button>
+          <button class="sv-opt" data-q="1" data-v="استخدام" onclick="svMulti(this)"><span class="sv-opt-ic">💼</span>استخدام و کار</button>
+          <button class="sv-opt sv-opt-other" data-q="1" data-v="other" onclick="svMultiOther(this,'otherInp1')"><span class="sv-opt-ic">✏️</span>موارد دیگر...</button>
+          </div>
+        <div class="sv-nav"><div></div><button class="sv-btn sv-btn-p" onclick="svNext(1)">بعدی ←</button></div>
+        <div class="sv-skip"><a onclick="svSkip()">رد کردن این مرحله</a></div>
+      </div>
+
+      <div class="sv-step" id="s2">
+        <div class="sv-qnum">سوال ۲ از ۷</div>
+        <div class="sv-qtitle">😤 بزرگ‌ترین درد جستجوت چیه؟</div>
+        <div class="sv-qdesc">کدوم بخش بیشتر اعصابتو خورد می‌کنه؟</div>
+        <div class="sv-opts">
+          <button class="sv-opt" data-q="2" data-v="پیدا نکردن دقیق" onclick="svSingle(this)"><span class="sv-opt-ic">🎯</span>هرچی می‌گردم دقیقاً چیزی که می‌خوام پیدا نمی‌کنم</button>
+          <button class="sv-opt" data-q="2" data-v="پراکندگی" onclick="svSingle(this)"><span class="sv-opt-ic">🔀</span>مجبورم کلی سایت مختلف بگردم</button>
+          <button class="sv-opt" data-q="2" data-v="اعتماد" onclick="svSingle(this)"><span class="sv-opt-ic">🤝</span>نمی‌دونم به کدوم فروشنده اعتماد کنم</button>
+          <button class="sv-opt" data-q="2" data-v="اتلاف وقت" onclick="svSingle(this)"><span class="sv-opt-ic">⏰</span>کلی وقتم تلف میشه</button>
+          <button class="sv-opt sv-opt-other" data-q="2" data-v="other" onclick="svSingleOther(this,'otherInp2')"><span class="sv-opt-ic">✏️</span>موارد دیگر...</button>
+          </div>
+        <div class="sv-nav"><button class="sv-btn sv-btn-s" onclick="svPrev(2)">→ قبلی</button><button class="sv-btn sv-btn-p" onclick="svNext(2)">بعدی ←</button></div>
+        <div class="sv-skip"><a onclick="svSkip()">رد کردن</a></div>
+      </div>
+
+      <div class="sv-step" id="s3">
+        <div class="sv-qnum">سوال ۳ از ۷</div>
+        <div class="sv-qtitle">💎 چه امکاناتی حاضری براش پول بدی؟</div>
+        <div class="sv-qdesc">کدوم ویژگی بیشتر ارزش داره؟</div>
+        <div class="sv-opts">
+          <button class="sv-opt" data-q="3" data-v="جستجوی هوشمند" onclick="svSingle(this)"><span class="sv-opt-ic">🧠</span>جستجوی هوشمند که دقیقاً بفهمه چی می‌خوام</button>
+          <button class="sv-opt" data-q="3" data-v="بازار تقاضا" onclick="svSingle(this)"><span class="sv-opt-ic">📊</span>درخواستم بره به فروشنده‌ها</button>
+          <button class="sv-opt" data-q="3" data-v="اعلان" onclick="svSingle(this)"><span class="sv-opt-ic">🔔</span>خبر بده هر وقت چیزی که می‌خوام اومد</button>
+          <button class="sv-opt" data-q="3" data-v="مقایسه" onclick="svSingle(this)"><span class="sv-opt-ic">⚖️</span>مقایسه قیمت بین همه سایت‌ها</button>
+          <button class="sv-opt sv-opt-other" data-q="3" data-v="other" onclick="svSingleOther(this,'otherInp3')"><span class="sv-opt-ic">✏️</span>موارد دیگر...</button>
+          </div>
+        <div class="sv-nav"><button class="sv-btn sv-btn-s" onclick="svPrev(3)">→ قبلی</button><button class="sv-btn sv-btn-p" onclick="svNext(3)">بعدی ←</button></div>
+        <div class="sv-skip"><a onclick="svSkip()">رد کردن</a></div>
+      </div>
+
+      <div class="sv-step" id="s4">
+        <div class="sv-qnum">سوال ۴ از ۷</div>
+        <div class="sv-qtitle">💰 چقدر در ماه هزینه می‌کنی؟</div>
+        <div class="sv-qdesc">برای یه دستیار جستجوی حرفه‌ای چقدر بودجه می‌ذاری؟</div>
+        <div class="sv-opts">
+          <button class="sv-opt" data-q="4" data-v="رایگان" onclick="svSingle(this)"><span class="sv-opt-ic">🆓</span>رایگان یا زیر ۵۰ هزار</button>
+          <button class="sv-opt" data-q="4" data-v="۵۰-۱۰۰ هزار" onclick="svSingle(this)"><span class="sv-opt-ic">💳</span>۵۰ تا ۱۰۰ هزار تومن</button>
+          <button class="sv-opt" data-q="4" data-v="۱۰۰-۲۰۰ هزار" onclick="svSingle(this)"><span class="sv-opt-ic">💎</span>۱۰۰ تا ۲۰۰ هزار تومن</button>
+          <button class="sv-opt" data-q="4" data-v="+۲۰۰ هزار" onclick="svSingle(this)"><span class="sv-opt-ic">👑</span>بیشتر از ۲۰۰ هزار (اگه واقعاً به دردم بخوره)</button>
+          <button class="sv-opt sv-opt-other" data-q="4" data-v="other" onclick="svSingleOther(this,'otherInp4')"><span class="sv-opt-ic">✏️</span>مقدار دیگری دارم در نظر...</button>
+          </div>
+        <div class="sv-nav"><button class="sv-btn sv-btn-s" onclick="svPrev(4)">→ قبلی</button><button class="sv-btn sv-btn-p" onclick="svNext(4)">بعدی ←</button></div>
+        <div class="sv-skip"><a onclick="svSkip()">رد کردن</a></div>
+      </div>
+
+      <div class="sv-step" id="s5">
+        <div class="sv-qnum">سوال ۵ از ۷</div>
+        <div class="sv-qtitle">📱 بیشتر با چه دستگاهی جستجو می‌کنی؟</div>
+        <div class="sv-qdesc">این اطلاعات به بهینه‌سازی تجربه کمک می‌کنه</div>
+        <div class="sv-opts">
+          <button class="sv-opt" data-q="5" data-v="موبایل" onclick="svSingle(this)"><span class="sv-opt-ic">📱</span>بیشتر موبایل</button>
+          <button class="sv-opt" data-q="5" data-v="دسکتاپ" onclick="svSingle(this)"><span class="sv-opt-ic">💻</span>بیشتر لپ‌تاپ یا دسکتاپ</button>
+          <button class="sv-opt" data-q="5" data-v="هر دو" onclick="svSingle(this)"><span class="sv-opt-ic">🔄</span>هر دو به یه اندازه</button>
+          <button class="sv-opt sv-opt-other" data-q="5" data-v="other" onclick="svSingleOther(this,'otherInp5')"><span class="sv-opt-ic">✏️</span>موارد دیگر...</button>
+          </div>
+        <div class="sv-nav"><button class="sv-btn sv-btn-s" onclick="svPrev(5)">→ قبلی</button><button class="sv-btn sv-btn-p" onclick="svNext(5)">بعدی ←</button></div>
+        <div class="sv-skip"><a onclick="svSkip()">رد کردن</a></div>
+      </div>
+
+      <div class="sv-step" id="s6">
+        <div class="sv-qnum">سوال ۶ از ۷</div>
+        <div class="sv-qtitle">🌟 از کجا فوتون رو پیدا کردی؟</div>
+        <div class="sv-qdesc">این به ما کمک می‌کنه بهتر رشد کنیم</div>
+        <div class="sv-opts">
+          <button class="sv-opt" data-q="6" data-v="شبکه اجتماعی" onclick="svSingle(this)"><span class="sv-opt-ic">📸</span>شبکه‌های اجتماعی (اینستا، تلگرام)</button>
+          <button class="sv-opt" data-q="6" data-v="دوست" onclick="svSingle(this)"><span class="sv-opt-ic">👥</span>دوست یا آشنا معرفی کرد</button>
+          <button class="sv-opt" data-q="6" data-v="گوگل" onclick="svSingle(this)"><span class="sv-opt-ic">🔍</span>گوگل یا سرچ</button>
+          <button class="sv-opt" data-q="6" data-v="سایر" onclick="svSingle(this)"><span class="sv-opt-ic">✨</span>روش دیگه</button>
+          <button class="sv-opt sv-opt-other" data-q="6" data-v="other" onclick="svSingleOther(this,'otherInp6')"><span class="sv-opt-ic">✏️</span>روش دیگه‌ای بود...</button>
+          </div>
+        <div class="sv-nav"><button class="sv-btn sv-btn-s" onclick="svPrev(6)">→ قبلی</button><button class="sv-btn sv-btn-p" onclick="svNext(6)">بعدی ←</button></div>
+        <div class="sv-skip"><a onclick="svSkip()">رد کردن</a></div>
+      </div>
+
+      <div class="sv-step" id="s7">
+        <div class="sv-qnum">سوال ۷ از ۷</div>
+        <div class="sv-qtitle">💬 نظر یا پیشنهادی داری؟</div>
+        <div class="sv-qdesc">هر چیزی که می‌خوای به تیم فوتون بگی</div>
+        <textarea class="sv-inp" id="svComment" rows="3" placeholder="پیشنهادت رو اینجا بنویس (اختیاری)..."></textarea>
+        <div class="sv-note">🎁 با ثبت این فرم جزو ۱۰۰۰ نفر اول دسترسی زودهنگام هستی و <strong>۱ ماه اشتراک پرو رایگان</strong> می‌گیری!</div>
+        <div class="sv-nav"><button class="sv-btn sv-btn-s" onclick="svPrev(7)">→ قبلی</button><button class="sv-btn sv-btn-p" id="svSubmitBtn" onclick="svSubmit()">✨ دریافت انرژی رایگان</button></div>
+        <div class="sv-skip"><a onclick="svSkip()">رد کردن و دریافت انرژی</a></div>
+      </div>
+    </div>
+
+    <!-- Success -->
+    <div class="v-success" id="vSuccess">
+      <div class="success-orb"></div>
+      <h3>🎉 خوش آمدی!</h3>
+      <p>ثبت‌نام موفق. ۱۰۰ واحد انرژی رایگان به حسابت اضافه شد!</p>
+      <div class="gifts">
+        <div class="gift-chip">⚡ ۱۰۰ واحد انرژی</div>
+        <div class="gift-chip">🌟 عضو بنیانگذار</div>
+        <div class="gift-chip">🚀 دسترسی اول</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ SHARE MODAL ═══════ -->
+<div class="overlay" id="share-overlay" onclick="if(event.target===this)closeShare()">
+  <div class="modal-box" id="share-modal">
+    <button class="m-close" onclick="closeShare()">✕</button>
+    <div style="font-size:1.8rem;text-align:center;margin-bottom:8px;">🔗</div>
+    <div style="font-size:1.1rem;font-weight:800;text-align:center;margin-bottom:5px;">دوستاتو دعوت کن!</div>
+    <div style="font-size:.8rem;color:var(--mu);text-align:center;margin-bottom:18px;">لینک های فوتون رو با دوستانت به اشتراک بذار</div>
+    <div id="refStats" style="font-size:.75rem;color:var(--ph);text-align:center;margin-bottom:10px;min-height:18px;"></div>
+    <div class="share-url-box">
+      <span class="share-url-txt" id="shareUrlTxt">https://hiphoton.ir</span>
+      <button class="share-copy-btn" onclick="copyUrl()">کپی</button>
+    </div>
+    <div class="share-methods">
+      <div class="share-m" onclick="shareVia('telegram')"><span class="share-m-icon">✈️</span><span class="share-m-label">تلگرام</span></div>
+      <div class="share-m" onclick="shareVia('whatsapp')"><span class="share-m-icon">💬</span><span class="share-m-label">واتساپ</span></div>
+      <div class="share-m" onclick="shareVia('instagram')"><span class="share-m-icon">📸</span><span class="share-m-label">اینستاگرام</span></div>
+      <div class="share-m" onclick="shareVia('native')"><span class="share-m-icon">📤</span><span class="share-m-label">سایر</span></div>
+    </div>
+    <div style="text-align:center;"><button style="background:none;border:none;color:var(--mu);font-size:.8rem;cursor:pointer;text-decoration:underline;" onclick="closeShare()">بستن</button></div>
+  </div>
+</div>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <div class="hero-badge"><span class="bdot"></span>آینده جستجوی هوشمند — اکنون</div>
+  <h1 class="hero-title">های 👋🏻 <span class="tg">فوتون</span></h1>
+  <p class="hero-sub">Hi Photon · پلتفرم هوش مصنوعی نسل بعد</p>
+  <p class="hero-desc">نیاز خود را بگویید — هوش مصنوعی بهترین مسیر را پیدا می‌کند.<br>اتصال هوشمند کاربران به خدمات، محصولات و کسب‌وکارها.</p>
+  <div class="hero-cta">
+    <button class="btn-p" onclick="openModal()">✨ ثبت‌نام رایگان</button>
+    <a href="#features" class="btn-g">🔭 بیشتر بدانید</a>
+  </div>
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-n" data-count="98">0</div><div class="stat-l">% دقت معنایی</div></div>
+    <div class="stat"><div class="stat-n" data-count="5">0</div><div class="stat-l">× سریع‌تر</div></div>
+    <div class="stat"><div class="stat-n" data-count="3">0</div><div class="stat-l">بازار هدف</div></div>
+    <div class="stat"><div class="stat-n" data-count="100">0</div><div class="stat-l">% AI‑Native</div></div>
+  </div>
+</section>
+
+<!-- ═══════ FEATURES ═══════ -->
+<section id="features" style="padding:90px 20px;max-width:1100px;margin:0 auto;">
+  <div class="sh reveal"><p class="sey">⚡ قابلیت‌ها</p><h2 class="st">ساخته شده برای <span class="tg">فردا</span></h2><p class="sd">هر ویژگی برای یک دنیای AI‑First</p></div>
+  <div class="fgrid">
+    <div class="fc reveal"><div class="fi-icon">🧠</div><div class="ft">موتور جستجوی معنایی</div><div class="fd">درک مفهوم واقعی درخواست — نه فقط کلمات کلیدی.</div></div>
+    <div class="fc reveal"><div class="fi-icon">🌐</div><div class="ft">بازار تقاضا</div><div class="fd">اگه پاسخ نبود، درخواستت به کسب‌وکارهای مرتبط ارسال می‌شه.</div></div>
+    <div class="fc reveal"><div class="fi-icon">⚡</div><div class="ft">فرم‌سازی هوشمند</div><div class="fd">تولید خودکار فرم‌های اطلاعاتی توسط AI.</div></div>
+    <div class="fc reveal"><div class="fi-icon">🎯</div><div class="ft">پیشنهاددهی شخصی</div><div class="fd">پیشنهادهای دقیق بر اساس نیاز واقعی شما.</div></div>
+    <div class="fc reveal"><div class="fi-icon">🔔</div><div class="ft">اعلان‌های هوشمند</div><div class="fd">در لحظه یافتن نتیجه بلافاصله آگاه می‌شوید.</div></div>
+    <div class="fc reveal"><div class="fi-icon">🔌</div><div class="ft">API سازمانی</div><div class="fd">موتور جستجو را در سیستم‌های خود یکپارچه کنید.</div></div>
+  </div>
+</section>
+
+<!-- ═══════ HOW ═══════ -->
+<section style="padding:90px 20px;background:rgba(0,180,255,.015);">
+  <div style="max-width:800px;margin:0 auto;">
+    <div class="sh reveal"><p class="sey">🚀 نحوه کار</p><h2 class="st">از <span class="tg">نیاز</span> تا <span class="tg">پاسخ</span></h2></div>
+    <div class="steps">
+      <div class="step reveal"><div class="sn">۱</div><div class="si">💬</div><div class="step-t"><h3>درخواست با زبان طبیعی</h3><p>مثل صحبت با دوست — بگویید چه می‌خواهید.</p></div></div>
+      <div class="step reveal"><div class="sn">۲</div><div class="si">🧬</div><div class="step-t"><h3>تحلیل معنایی</h3><p>AI مفهوم، نیت و موجودیت‌های درخواست را استخراج می‌کند.</p></div></div>
+      <div class="step reveal"><div class="sn">۳</div><div class="si">🔍</div><div class="step-t"><h3>جستجو در منابع</h3><p>مرتبط‌ترین نتایج از میان صدها منبع رتبه‌بندی می‌شوند.</p></div></div>
+      <div class="step reveal"><div class="sn">۴</div><div class="si">✅</div><div class="step-t"><h3>نتیجه یا بازار تقاضا</h3><p>نتیجه نمایش داده می‌شود یا به کسب‌وکارها ارسال می‌شود.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ VALUE ═══════ -->
+<section style="padding:90px 20px;max-width:1100px;margin:0 auto;">
+  <div class="sh reveal"><p class="sey">💡 ارزش پیشنهادی</p><h2 class="st">برای <span class="tg">همه</span> طراحی شده</h2></div>
+  <div class="vgrid">
+    <div>
+      <p style="color:var(--ph);font-weight:700;font-size:.95rem;margin-bottom:4px;">👤 برای کاربران</p>
+      <div class="vi reveal"><div class="vi-icon">⏱️</div><div class="vi-t"><h4>صرفه‌جویی در زمان</h4><p>دیگر ساعت‌ها در ده‌ها سایت جستجو نکنید.</p></div></div>
+      <div class="vi reveal"><div class="vi-icon">🎯</div><div class="vi-t"><h4>نتایج دقیق‌تر</h4><p>AI دقیقاً آنچه نیاز دارید را پیدا می‌کند.</p></div></div>
+      <div class="vi reveal"><div class="vi-icon">🪄</div><div class="vi-t"><h4>پیشنهادهای شخصی</h4><p>تجربه منحصر‌به‌فرد برای شما.</p></div></div>
+    </div>
+    <div class="vvis reveal">
+      <div class="v-orb"></div>
+      <h3 style="font-size:.98rem;font-weight:700;margin-bottom:5px;">های فوتون</h3>
+      <p style="font-size:.78rem;color:var(--mu);">هوش مصنوعی در خدمت شما</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ COMPARE ═══════ -->
+<section style="padding:90px 20px;">
+  <div style="max-width:800px;margin:0 auto;">
+    <div class="sh reveal"><p class="sey">⚖️ مقایسه</p><h2 class="st">های فوتون vs <span class="tg">مارکت‌پلیس سنتی</span></h2></div>
+    <div class="reveal">
+      <table class="ctable">
+        <thead><tr><th style="text-align:right">ویژگی</th><th>سنتی</th><th style="color:var(--ph)">های فوتون</th></tr></thead>
+        <tbody>
+          <tr><td>جستجوی معنایی</td><td class="cr">✗</td><td class="ck">✓</td></tr>
+          <tr><td>بازار تقاضا</td><td class="cr">✗</td><td class="ck">✓</td></tr>
+          <tr><td>تحلیل نیت کاربر</td><td class="cr">✗</td><td class="ck">✓</td></tr>
+          <tr><td>فرم‌سازی هوشمند</td><td class="cr">✗</td><td class="ck">✓</td></tr>
+          <tr><td>پیشنهاددهی AI</td><td class="cr">✗</td><td class="ck">✓</td></tr>
+          <tr><td>لیدهای باکیفیت</td><td style="color:var(--mu)">محدود</td><td class="ck">✓ بالا</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CTA ═══════ -->
+<section style="padding:70px 20px;text-align:center;position:relative;z-index:1;">
+  <div class="reveal" style="max-width:520px;margin:0 auto;background:var(--panel);border:1px solid var(--br);border-radius:24px;padding:44px 30px;backdrop-filter:blur(20px);position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(0,200,255,.07),transparent 60%);pointer-events:none;"></div>
+    <div style="font-size:2.2rem;margin-bottom:11px;">🚀</div>
+    <h2 class="st" style="margin-bottom:8px;">همین حالا ثبت‌نام کنید</h2>
+    <p style="color:var(--mu);margin-bottom:6px;font-size:.88rem;">اولین نفری باشید که دسترسی می‌گیرد</p>
+    <p style="color:var(--ph);font-size:.83rem;margin-bottom:22px;font-weight:600;">🎁 ۱۰۰ واحد انرژی رایگان</p>
+    <button class="btn-p" onclick="openModal()">✨ ثبت‌نام رایگان</button>
+  </div>
+</section>
+
+<footer>
+  <div class="flogo">Hi Photon · های فوتون</div>
+  <p>پلتفرم هوشمند کشف تقاضا در خاورمیانه</p>
+  <p style="margin-top:5px;font-size:.68rem;opacity:.4;">© ۱۴۰۴ های فوتون — ساخته شده برای فردا</p>
+</footer>
+
+<script>
+'use strict';
+
+// ══════════════════════════
+// BACKGROUND
+// ══════════════════════════
+(function(){
+  var cv=document.getElementById('bgc'),ctx=cv.getContext('2d'),W,H,pts=[];
+  function rsz(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  rsz();window.addEventListener('resize',rsz);
+  function rp(){return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.3+.4,o:Math.random()*.38+.08,c:Math.random()<.5?'#6ee7ff':'#a78bfa'};}
+  for(var i=0;i<70;i++)pts.push(rp());
+  function drawBg(){
+    ctx.clearRect(0,0,W,H);
+    var g=ctx.createRadialGradient(W*.3,H*.2,0,W*.3,H*.2,W*.6);g.addColorStop(0,'rgba(0,180,255,0.04)');g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    var g2=ctx.createRadialGradient(W*.7,H*.8,0,W*.7,H*.8,W*.5);g2.addColorStop(0,'rgba(167,139,250,0.04)');g2.addColorStop(1,'transparent');ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
+    for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=p.o;ctx.fill();}
+    ctx.globalAlpha=1;
+    for(var i=0;i<pts.length;i++)for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<105){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='rgba(110,231,255,'+(1-d/105)*.05+')';ctx.lineWidth=.5;ctx.stroke();}}
+    requestAnimationFrame(drawBg);
+  }
+  drawBg();
+})();
+
+// ══════════════════════════
+// THEME
+// ══════════════════════════
+function toggleTheme(){
+  document.body.dataset.theme=document.body.dataset.theme==='dark'?'light':'dark';
+}
+
+// ══════════════════════════
+// NOTIFICATION
+// ══════════════════════════
+var notifOpen=false;
+var NOTIF_KEY='hp_notifs_v1';
+function saveNotifs(){try{localStorage.setItem(NOTIF_KEY,JSON.stringify(notifs));}catch(e){}}
+function loadPersistedNotifs(){try{var d=localStorage.getItem(NOTIF_KEY);return d?JSON.parse(d):[];}catch(e){return [];}}
+var notifs=loadPersistedNotifs().filter(function(n){return !n.read;});
+function toggleNotif(){
+  notifOpen=!notifOpen;
+  var p=document.getElementById('notifPanel');
+  p.classList.toggle('open',notifOpen);
+  if(notifOpen){
+    document.getElementById('notifDot').classList.remove('on');
+    // mark all as read immediately, show tick, then fade out after 3s
+    var changed=false;
+    notifs.forEach(function(n){if(!n.read){n.read=true;changed=true;}});
+    if(changed){saveNotifs();renderNotifList();}
+    // auto-dismiss read notifications after 4s while panel is open
+    setTimeout(function(){
+      if(!notifOpen)return;
+      var had=notifs.length;
+      notifs=notifs.filter(function(n){return !n.read;});
+      if(notifs.length!==had){saveNotifs();renderNotifList();}
+    },4000);
+  }
+}
+document.addEventListener('click',function(e){
+  var w=document.getElementById('notifWrap');
+  if(w&&!w.contains(e.target)&&notifOpen){notifOpen=false;document.getElementById('notifPanel').classList.remove('open');}
+});
+function renderNotifList(){
+  var l=document.getElementById('notifList');
+  if(!notifs.length){l.innerHTML='<div class="np-empty">هیچ اعلانی وجود ندارد</div>';return;}
+  l.innerHTML=notifs.map(function(n,i){
+    var readClass=n.read?' np-read':'';
+    return '<div class="np-item'+readClass+'" id="npItem'+i+'">'
+      +'<div class="np-icon">'+n.icon+'</div>'
+      +'<div style="flex:1"><div class="np-text">'+n.text+'</div>'
+      +'<div class="np-time">'+n.t+(n.read?' · خوانده شد':'')+'</div></div>'
+      +'<button class="np-dismiss" onclick="dismissNotif('+i+')" title="حذف">✓</button>'
+      +'</div>';
+  }).join('');
+}
+function dismissNotif(idx){
+  var el=document.getElementById('npItem'+idx);
+  if(el){
+    el.style.transition='opacity .25s,transform .25s';
+    el.style.opacity='0';el.style.transform='translateX(20px)';
+    setTimeout(function(){
+      notifs.splice(idx,1);
+      renderNotifList();
+      if(!notifs.length)document.getElementById('notifDot').classList.remove('on');
+    },260);
+  }
+}
+function addNotif(icon,text){
+  var now=new Date(),t=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  notifs.unshift({icon:icon,text:text,t:t,read:false});
+  saveNotifs();renderNotifList();
+  document.getElementById('notifDot').classList.add('on');
+}
+(function(){
+  var u=loadUser();
+  if(!u||!u.registered){
+    setTimeout(function(){addNotif('👋','به های فوتون خوش آمدید! برای دریافت ۱۰۰ واحد انرژی رایگان ثبت‌نام کنید.');},1500);
+  }
+})();
+
+// ══════════════════════════
+// SHARE
+// ══════════════════════════
+var SURL=(function(){var u=loadUser();return u&&u.refCode?window.location.href.split('?')[0]+'?ref='+u.refCode:window.location.href.split('?')[0];})();
+function openShare(){
+  var u=loadUser();
+  if(u&&u.refCode)SURL=window.location.href.split('?')[0]+'?ref='+u.refCode;
+  var rd=u&&u.refCode?loadRef(u.refCode):{count:0,energy:0};
+  document.getElementById('shareUrlTxt').textContent=SURL;
+  // Show referral stats in share modal
+  var statsEl=document.getElementById('refStats');
+  if(statsEl){statsEl.textContent='دعوت‌های موفق: '+rd.count+' نفر  |  انرژی هدیه: '+rd.energy+' واحد';}
+  document.getElementById('share-overlay').classList.add('open');
+}
+function closeShare(){document.getElementById('share-overlay').classList.remove('open');}
+function copyUrl(){
+  navigator.clipboard&&navigator.clipboard.writeText(SURL).then(function(){var b=document.querySelector('.share-copy-btn');b.textContent='✓ کپی شد!';setTimeout(function(){b.textContent='کپی';},2000);});
+}
+function shareVia(p){
+  var u=SURL,msg=encodeURIComponent('های فوتون — دستیار هوشمند جستجو: '+u);
+  if(p==='telegram')window.open('https://t.me/share/url?url='+encodeURIComponent(u)+'&text='+encodeURIComponent('های فوتون'),'_blank');
+  else if(p==='whatsapp')window.open('https://wa.me/?text='+msg,'_blank');
+  else if(p==='instagram'){copyUrl();alert('لینک کپی شد! در اینستاگرام پیست کن 📸');}
+  else if(p==='native'&&navigator.share)navigator.share({title:'های فوتون',url:u});
+}
+
+// ══════════════════════════
+// ENERGY
+// ══════════════════════════
+var energyReg=false,eUsed=0,eTotal=0,selPlanData={amount:100,price:'رایگان'};
+function updateEnergy(){
+  var fill=document.getElementById('eRingFill');
+  var txt=document.getElementById('eNavTxt');
+  if(!energyReg){
+    fill.style.strokeDashoffset='63.6';fill.style.stroke='rgba(110,231,255,0.15)';
+    txt.textContent='';
+  } else {
+    var pct=eTotal>0?(eUsed/eTotal):0;
+    fill.style.strokeDashoffset=(63.6*(1-pct)).toFixed(2);
+    fill.style.stroke='url(#eGrad)';
+    txt.textContent=eUsed+'/'+eTotal;
+  }
+}
+function openEnergyModal(){
+  document.getElementById('energy-overlay').classList.add('open');
+  var left=eTotal-eUsed,pct=eTotal>0?Math.round(eUsed/eTotal*100):0;
+  document.getElementById('eUsed').textContent=eUsed;
+  document.getElementById('eLeft').textContent=left;
+  document.getElementById('eBarFill').style.width=pct+'%';
+  document.getElementById('ePct').textContent=pct+'٪';
+  document.getElementById('eTotal').textContent=eUsed+' / '+eTotal;
+  document.getElementById('eEmptyNote').style.display=energyReg?'none':'block';
+  // Show referral stats
+  var u2=loadUser();var refEl=document.getElementById('eRefStats');
+  if(refEl&&u2&&u2.refCode){
+    var rd2=loadRef(u2.refCode);
+    refEl.style.display=energyReg?'block':'none';
+    refEl.innerHTML='<div style="display:flex;gap:10px;margin-bottom:10px;">'
+      +'<div class="estat"><div class="estat-n">'+rd2.count+'</div><div class="estat-l">دوست دعوت شده</div></div>'
+      +'<div class="estat"><div class="estat-n">'+rd2.energy+'</div><div class="estat-l">انرژی از دعوت</div></div></div>';
+  } else if(refEl) refEl.style.display='none';
+  var bb=document.getElementById('eBuyBtn');
+  if(energyReg){bb.textContent='🛒 خرید '+selPlanData.amount+' واحد — '+selPlanData.price;bb.onclick=function(){addNotif('🛒','درگاه پرداخت به زودی فعال می‌شود.');closeEnergyModal();};}
+  else{bb.textContent='✨ ثبت‌نام و دریافت ۱۰۰ واحد رایگان';bb.onclick=function(){closeEnergyModal();openModal();};}
+}
+function closeEnergyModal(){document.getElementById('energy-overlay').classList.remove('open');}
+function selPlan(el,amt,price){
+  document.querySelectorAll('.eplan').forEach(function(p){p.classList.remove('sel');});
+  el.classList.add('sel');selPlanData={amount:amt,price:price};
+  if(energyReg)document.getElementById('eBuyBtn').textContent='🛒 خرید '+amt+' واحد — '+price;
+}
+updateEnergy();
+
+// ═══════════════════════════════════════════════════════
+// PHOTON CANVAS — neon ring + 3 dots (reference style)
+// ═══════════════════════════════════════════════════════
+(function(){
+  var PC = document.getElementById('photon-canvas');
+  if (!PC) return;
+
+  var cx  = PC.getContext('2d', { alpha: true });
+  var DPR = Math.min(window.devicePixelRatio || 1, 3);
+
+  function logicalSize(){
+    return window.innerWidth <= 480 ? 82
+         : window.innerWidth <= 768 ? 90 : 106;
+  }
+  function resize(){
+    var L = logicalSize();
+    PC.style.width  = L + 'px';
+    PC.style.height = L + 'px';
+    PC.width  = Math.round(L * DPR);
+    PC.height = Math.round(L * DPR);
+    cx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // state
+  var _state = 'idle';
+  var _burst = 0;
+  window.setPhotonState = function(s){
+    _state = s;
+    if (s === 'listening' || s === 'speaking') _burst = 1.0;
+  };
+
+  var T0 = null;
+
+  // ── draw one glowing dot (pure gradient, no shadowBlur) ──
+  function dot(x, y, r, alpha){
+    // halo
+    var h = cx.createRadialGradient(x, y, 0, x, y, r * 5);
+    h.addColorStop(0,    'rgba(83,245,255,' + (alpha * .20) + ')');
+    h.addColorStop(0.45, 'rgba(83,245,255,' + (alpha * .08) + ')');
+    h.addColorStop(1,    'rgba(83,245,255,0)');
+    cx.beginPath(); cx.arc(x, y, r * 5, 0, Math.PI * 2);
+    cx.fillStyle = h; cx.fill();
+    // bright core
+    var c = cx.createRadialGradient(x, y, 0, x, y, r);
+    c.addColorStop(0,   'rgba(255,255,255,' + alpha + ')');
+    c.addColorStop(0.5, 'rgba(180,248,255,' + alpha + ')');
+    c.addColorStop(1,   'rgba(83,245,255,0)');
+    cx.beginPath(); cx.arc(x, y, r, 0, Math.PI * 2);
+    cx.fillStyle = c; cx.fill();
+  }
+
+  function eio(t){ return t < .5 ? 2*t*t : -1 + (4 - 2*t)*t; }
+
+  // dot sequential: left→center→right, 1.8s cycle
+  function dotA(idx, t){
+    var phase = (t % 1.8) / 1.8;
+    var peak  = idx / 3;
+    var delta = Math.abs(((phase - peak + 1.5) % 1) - 0.5);
+    var raw   = Math.max(0, 1 - delta * 6);
+    return 0.25 + 0.75 * eio(raw);
+  }
+
+  function draw(ts){
+    if (!T0) T0 = ts;
+    var t   = (ts - T0) * .001;
+    var L   = logicalSize();
+    var CX  = L * .5, CY = L * .5;
+    var isL = _state === 'listening';
+    var isS = _state === 'speaking';
+    var isA = isL || isS;
+    var lm  = document.body.dataset.theme === 'light';
+
+    if (_burst > .004) _burst *= .962; else _burst = 0;
+
+    // breathing
+    var bSin    = Math.sin(t * (isA ? 1.8 : .45) * Math.PI * 2);
+    var breathe = bSin * (isA ? 3.0 : 1.2) + _burst * 5;
+    var scale   = 1 + bSin * .011 + _burst * .022;
+
+    var RING_R      = (L * .392 + breathe * .5) * scale;
+    var STROKE_SOFT = L * .068;
+    var STROKE_CRIS = L * .024;
+    var INNER_R     = RING_R - STROKE_SOFT * .55;
+
+    // float
+    var floatY = Math.sin(t * .65 * Math.PI * 2) * Math.min(4, L * .042);
+
+    cx.clearRect(0, 0, L, L);
+    cx.save();
+    cx.translate(0, floatY);
+
+    // ── outer aura ──
+    var AR = RING_R + L * .22 + _burst * L * .13;
+    var aA = lm ? .15 : .07 + _burst * .05;
+    var au = cx.createRadialGradient(CX, CY, RING_R * .7, CX, CY, AR);
+    au.addColorStop(0,   'rgba(83,245,255,' + (aA * 2.5) + ')');
+    au.addColorStop(.35, 'rgba(83,245,255,' + (aA * 1.2) + ')');
+    au.addColorStop(.7,  'rgba(30,160,255,' + (aA * .5)  + ')');
+    au.addColorStop(1,   'rgba(0,120,255,0)');
+    cx.beginPath(); cx.arc(CX, CY, AR, 0, Math.PI * 2);
+    cx.fillStyle = au; cx.fill();
+
+    // ── glow band around ring ──
+    var BW = STROKE_SOFT * 1.7;
+    var bA = lm ? .38 : .18 + _burst * .10;
+    var gb = cx.createRadialGradient(CX, CY, RING_R - BW, CX, CY, RING_R + BW);
+    gb.addColorStop(0,    'rgba(83,245,255,0)');
+    gb.addColorStop(.30,  'rgba(83,245,255,' +  bA      + ')');
+    gb.addColorStop(.55,  'rgba(83,245,255,' + (bA*1.5) + ')');
+    gb.addColorStop(.75,  'rgba(40,200,255,' +  bA      + ')');
+    gb.addColorStop(1,    'rgba(0,140,255,0)');
+    cx.beginPath(); cx.arc(CX, CY, RING_R + BW, 0, Math.PI * 2);
+    cx.fillStyle = gb; cx.fill();
+
+    // ── pure black center ──
+    cx.save(); cx.shadowBlur = 0; cx.shadowColor = 'transparent';
+    cx.beginPath(); cx.arc(CX, CY, INNER_R, 0, Math.PI * 2);
+    cx.fillStyle = lm ? '#f0f4ff' : '#000000'; cx.fill();
+    cx.restore();
+
+    // ── neon ring (clipped so shadow stays circular) ──
+    cx.save();
+    var rcp = new Path2D(); rcp.arc(CX, CY, RING_R + STROKE_SOFT * 2.2, 0, Math.PI * 2);
+    cx.clip(rcp);
+    // soft glow stroke
+    cx.beginPath(); cx.arc(CX, CY, RING_R, 0, Math.PI * 2);
+    cx.strokeStyle = lm
+      ? 'rgba(0,140,215,' + (.42 + _burst * .18) + ')'
+      : 'rgba(83,245,255,' + (.22 + _burst * .14) + ')';
+    cx.lineWidth = STROKE_SOFT; cx.stroke();
+    // crisp bright centerline
+    var rGlow = 8 + bSin * 3.5 + _burst * 16;
+    cx.beginPath(); cx.arc(CX, CY, RING_R, 0, Math.PI * 2);
+    cx.strokeStyle = lm ? 'rgba(10,180,255,.96)' : 'rgba(190,252,255,.96)';
+    cx.lineWidth   = STROKE_CRIS;
+    cx.shadowColor = lm ? 'rgba(0,160,255,1)' : 'rgba(83,245,255,1)';
+    cx.shadowBlur  = rGlow; cx.stroke(); cx.shadowBlur = 0;
+    // active arcs (listening / speaking)
+    if (isA){
+      var nA  = isL ? 3 : 2;
+      var spd = t * (isL ? 1.6 : 1.2) * Math.PI * 2;
+      for (var w = 0; w < nA; w++){
+        var a0  = spd + w * (Math.PI * 2 / nA);
+        var aLn = .25 + .15 * Math.sin(t * 3.2 + w);
+        cx.beginPath(); cx.arc(CX, CY, RING_R, a0, a0 + aLn);
+        cx.strokeStyle = 'rgba(255,255,255,' + (.55 + .3 * Math.sin(t * 4.5 + w)) + ')';
+        cx.lineWidth   = STROKE_CRIS * 1.15;
+        cx.shadowColor = 'rgba(210,255,255,1)'; cx.shadowBlur = 10;
+        cx.stroke(); cx.shadowBlur = 0;
+      }
+    }
+    cx.restore();
+
+    // ── energy burst ──
+    if (_burst > .04){
+      var bR  = RING_R + _burst * L * .20;
+      var bg2 = cx.createRadialGradient(CX, CY, RING_R, CX, CY, bR);
+      bg2.addColorStop(0, 'rgba(83,245,255,' + (_burst * .25) + ')');
+      bg2.addColorStop(1, 'rgba(0,150,255,0)');
+      cx.beginPath(); cx.arc(CX, CY, bR, 0, Math.PI * 2);
+      cx.fillStyle = bg2; cx.fill();
+    }
+
+    // ── THREE DOTS (inside, clipped) ──
+    cx.save();
+    var fcp = new Path2D(); fcp.arc(CX, CY, INNER_R - 1, 0, Math.PI * 2);
+    cx.clip(fcp);
+
+    var dotR   = L * .034;
+    var dotSep = L * .118;      // spacing between dots
+    var dotY   = CY + L * .008; // very slightly below centre
+    var dotXs  = [CX - dotSep, CX, CX + dotSep];
+
+    for (var i = 0; i < 3; i++){
+      var a;
+      if (isA){
+        a = .82 + .18 * Math.abs(Math.sin(t * 4.5 + i * 1.1));
+      } else {
+        a = dotA(i, t);
+      }
+      dot(dotXs[i], dotY, dotR, a);
+    }
+
+    cx.restore(); // dots clip
+    cx.restore(); // float
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+// ══════════════════════════
+// CREATURE SCROLL + BUBBLES
+// ══════════════════════════
+var wrapEl=document.getElementById('photon-wrap');
+var bubEl=document.getElementById('speechBub');
+var secMsgs=[
+  {p:0,    msg:'سلام! من فوتونم 👋'},
+  {p:0.12, msg:'هر چیزی بخوای پیداش می‌کنم 🔍'},
+  {p:0.28, msg:'جستجوی هوشمند بدون دردسر 🧠'},
+  {p:0.44, msg:'می‌بینی چطور کار می‌کنم؟ 🚀'},
+  {p:0.60, msg:'هم کاربر، هم کسب‌وکار ✨'},
+  {p:0.76, msg:'ما واقعاً بهتریم! 😄'},
+  {p:0.88, msg:'ثبت‌نام کن، انرژی بگیر 🎁'},
+];
+var lastMsg='';
+function updateCreature(){
+  var sY=window.scrollY,dH=Math.max(document.body.scrollHeight-window.innerHeight,1),prog=Math.min(sY/dH,1);
+  var cS=document.getElementById('photon-canvas').width||88;
+  var navH=60,margin=16;
+  // clamp strictly so creature never leaves viewport
+  var minTop=navH+8;
+  var maxTop=window.innerHeight-cS-margin;
+  if(maxTop<minTop)maxTop=minTop;
+  var newTop=minTop+prog*(maxTop-minTop);
+  wrapEl.style.top=newTop+'px';
+  var msg=secMsgs[0].msg;
+  for(var i=0;i<secMsgs.length;i++)if(prog>=secMsgs[i].p)msg=secMsgs[i].msg;
+  if(msg!==lastMsg){bubEl.style.opacity='0';lastMsg=msg;setTimeout(function(){bubEl.textContent=msg;bubEl.style.opacity='1';},320);}
+}
+window.addEventListener('scroll',updateCreature,{passive:true});
+updateCreature();
+
+// ══════════════════════════
+// CHATBOT + KNOWLEDGE BASE
+// ══════════════════════════
+var chatOpen=false;
+var KB=[
+  {k:['فوتون چیه','چیه','معرفی','کی هستی','چه کاری','هستی'],a:'فوتون یه دستیار جستجوی هوشمنده که با هوش مصنوعی کار می‌کنه. به زبان طبیعی فارسی بنویس چی می‌خوای و من همه پلتفرم‌ها رو یکجا جستجو می‌کنم و بهترین نتیجه رو نشونت می‌دم. 🧠'},
+  {k:['فرق با گوگل','فرق با دیجی‌کالا','فرق','چه فرقی'],a:'گوگل فقط لینک می‌ده، دیجی‌کالا فقط کالاهای خودش رو نشون می‌ده. ولی من زبان طبیعی می‌فهمم، همه پلتفرم‌ها رو یکجا می‌گردم و اگه چیزی پیدا نشه درخواستت رو به فروشنده‌ها می‌فرستم. 🌐'},
+  {k:['رایگانه','قیمت','هزینه','پول'],a:'فوتون مدل فریمیوم داره. نسخه رایگان همیشه رایگانه. نسخه پرو با ۹۹ هزار تومن در ماه شامل جستجوی پیشرفته، ۵ لید ماهانه و اعلان هوشمند هست. 💰'},
+  {k:['ثبت نام','عضو','پیش لانچ','چطور عضو'],a:'خیلی ساده! روی دکمه ثبت‌نام کلیک کن، شماره موبایلت رو وارد کن و ۱۰۰ واحد انرژی رایگان بگیر! 🎁'},
+  {k:['انرژی','energy','واحد','اعتبار'],a:'انرژی واحد پردازش جستجو هست. هر جستجو مقداری انرژی مصرف می‌کنه. بعد از ثبت‌نام ۱۰۰ واحد رایگان دریافت می‌کنی! ⚡'},
+  {k:['بازار تقاضا','تقاضا','لید','فروشنده'],a:'اگه چیزی پیدا نشه درخواستت به بازار تقاضا می‌ره و فروشنده‌های مرتبط پیشنهاد می‌دن. دیگه لازم نیست تو دنبال چیزی بگردی، چیز دنبال تو می‌گرده! 🌐'},
+  {k:['امنیت','privacy','حریم','داده','اطلاعات من'],a:'اطلاعات شما نزد ما کاملاً محفوظه. داده‌ها رمزنگاری شده‌ان و هرگز به اشخاص ثالث فروخته نمی‌شن. 🔒'},
+  {k:['اپلیکیشن','اپ','نصب','موبایل','app'],a:'الان وب‌سایت در دسترسه و کاملاً واکنش‌گراست. اپلیکیشن اندروید و iOS هم در نقشه راه هست و حدود ۶ ماه دیگه منتشر می‌شه. 📱'},
+  {k:['چه پلتفرم','متصل','دیوار','دیجی‌کالا','شیپور'],a:'الان به دیجی‌کالا و دیوار متصلیم. شیپور، باسلام، ترب و پلتفرم‌های دیگه در مرحله بعدی اضافه می‌شن. هر ماه پلتفرم‌های جدید اضافه می‌کنیم! 🔗'},
+  {k:['چطور کار','پشت صحنه','موتور','هوش مصنوعی','ai'],a:'سه موتور هوشمند پشت صحنه داریم: موتور درک زبان که متنت رو می‌فهمه، موتور جستجوی یکپارچه که همه پلتفرم‌ها رو می‌گرده، و موتور بازار تقاضا که اگه چیزی پیدا نشه پیداش می‌کنه. ⚙️'},
+  {k:['مثال','نمونه','چطور بپرسم','چطور جستجو'],a:'خیلی راحت: «آیفون ۱۳ قرمز ۲۵۶ گیگ می‌خوام» یا «خونه ۷۰ متری نزدیک مترو رهن ۱۰۰ میلیون» یا «لپ‌تاپ مناسب برنامه‌نویسی زیر ۳۰ میلیون». دقیقاً مثل حرف زدن با دوست. 💬'},
+  {k:['دقت','درصد','اشتباه','دقیق'],a:'موتور NLU فوتون بالای ۸۵٪ دقت داره و داریم هر روز بهترش می‌کنیم. اگه اشتباه کرد می‌تونی با کلمات دیگه دوباره امتحان کنی. 🎯'},
+  {k:['چقدر طول','سرعت','سریع','زمان'],a:'زیر ۲ ثانیه! در حالت عادی کمتر از ۱.۵ ثانیه. داریم روی بهینه‌سازی کار می‌کنیم تا به زیر ۱ ثانیه برسیم. ⚡'},
+  {k:['پیدا نشد','چیزی نیست','نبود'],a:'نگران نباش! اگه پیدا نشه درخواستت به بازار تقاضا می‌ره. فروشنده‌ها مطلع می‌شن و وقتی چیزی مشابه پیدا بشه بهت اعلان می‌دیم. 🔔'},
+  {k:['مقایسه قیمت','ارزان‌ترین','بهترین قیمت'],a:'بله! وقتی جستجو می‌کنی همون محصول رو در پلتفرم‌های مختلف پیدا می‌کنم و قیمت‌ها رو کنار هم نشون می‌دم. می‌تونی بر اساس قیمت مرتب‌سازی کنی. 💰'},
+  {k:['حساب','پنل','پروفایل','ورود','لاگین'],a:'با ایمیل یا شماره موبایل کمتر از ۳۰ ثانیه ثبت‌نام کن. بعد پنل شخصی داری برای پیگیری جستجوها و لیدها. 👤'},
+  {k:['اشتراک','پرو','پروو','نسخه پرو'],a:'نسخه پرو با ۹۹ هزار تومن در ماه: جستجوی پیشرفته با فیلترهای دقیق، ۵ لید ماهانه برای بازار تقاضا، اعلان هوشمند، و تاریخچه جستجو. 💎'},
+  {k:['لغو اشتراک','کنسل','cancel'],a:'هر وقت خواستی بدون جریمه لغو کن. از پنل کاربری → اشتراک من → لغو تمدید خودکار. اشتراک تا پایان دوره فعال می‌مونه. ✅'},
+  {k:['حذف حساب','پاک','delete'],a:'از پنل کاربری یا با ایمیل به support@photon.ai درخواست بده. همه داده‌ها ظرف ۴۸ ساعت کاملاً پاک می‌شن. 🗑️'},
+  {k:['پشتیبانی','تماس','ایمیل','تلگرام'],a:'از طریق چت آنلاین (همین الان!)، تلگرام @HiPhotonSupport، یا ایمیل support@photon.ai. پاسخ چت زیر ۱۰ دقیقه، ایمیل زیر ۲ ساعت. 💬'},
+  {k:['api','سازمانی','یکپارچه','developer'],a:'API عمومی در فاز ۳ (حدود ۶ ماه دیگه) منتشر می‌شه. برنامه‌نویس‌ها می‌تونن موتور جستجو رو در سایت خودشون embed کنن. 🔌'},
+  {k:['وبلاگ','مقاله','آموزش'],a:'مقالات آموزشی داریم: نحوه جستجوی بهتر، راهنمای بازار تقاضا، و اخبار فوتون. به زودی بخش وبلاگ رو فعال می‌کنیم! 📝'},
+  {k:['کار','شغل','استخدام','فوتون','تیم'],a:'همیشه دنبال آدم‌های بااستعدادیم! تخصص‌های مورد نیاز: AI/NLP، Backend، Frontend، DevOps، Product. رزومه بفرست به jobs@photon.ai 💼'},
+  {k:['سرمایه گذاری','سرمایه','فاندینگ'],a:'فوتون با سرمایه شخصی تیم شروع شده. در مرحله مذاکره با سرمایه‌گذاران برای فاز رشد هستیم، ولی اولویت ارزش‌آفرینی برای کاربره. 🚀'},
+  {k:['ایران','خاورمیانه','فارسی','شهر'],a:'فوتون برای بازار ایران و خاورمیانه طراحی شده. پشتیبانی کامل از فارسی. کل ایران رو پوشش می‌دیم و در آینده عربی هم اضافه می‌شه. 🇮🇷'},
+  {k:['سلام','درود','hello','hi','خوبی'],a:'سلام! 👋 من فوتونم — دستیار هوشمند های فوتون. چطور می‌توانم کمک کنم؟'},
+  {k:['ممنون','مرسی','تشکر','خداحافظ','باریکلا'],a:'خوشحالم که تونستم کمک کنم! هر سوالی داشتی اینجام. 🌟'},
+  {k:['چه می‌تونی','چیکار','توانایی','بلدی','قابلیت'],a:'می‌تونم درباره های فوتون توضیح بدم، قیمت‌ها و قابلیت‌ها رو بگم، راهنمای ثبت‌نام باشم، و هر سوالی که داری جواب بدم! 🤖'},
+  {k:['آینده','نقشه راه','roadmap','بعدی'],a:'در نقشه راه: چت‌بات تعاملی، اپلیکیشن موبایل، اتصال به ۱۰+ پلتفرم، مقایسه پیشرفته با نمودار قیمت، و احراز هویت دو مرحله‌ای. 🗺️'},
+  {k:['کد تخفیف','تخفیف','discount','کوپن'],a:'کد PHOTON-EARLY برای ۱۰۰۰ نفر اول: ۱ ماه اشتراک پرو رایگان + اعتبار لید اضافه + نشان "کاربر اولیه". همین الان ثبت‌نام کن! 🎁'},
+];
+function getBotReply(t){
+  var lo=t.toLowerCase().trim();
+  if(!lo)return null;
+  // first pass: exact keyword match
+  for(var i=0;i<KB.length;i++)
+    for(var j=0;j<KB[i].k.length;j++)
+      if(lo.indexOf(KB[i].k[j])!==-1)return KB[i].a;
+  // second pass: partial word match (catch typos/short inputs)
+  for(var i=0;i<KB.length;i++)
+    for(var j=0;j<KB[i].k.length;j++){
+      var kw=KB[i].k[j].replace(/\s+/g,'');
+      if(kw.length>=3&&lo.replace(/\s+/g,'').indexOf(kw)!==-1)return KB[i].a;
+    }
+  return 'سوال جالبیه! برای اطلاعات بیشتر ثبت‌نام کنید یا از پشتیبانی بپرسید. 🚀';
+}
+function addMsg(txt,role){
+  var m=document.getElementById('chatMsgs');
+  var d=document.createElement('div');d.className='msg msg-'+role;d.textContent=txt;
+  m.appendChild(d);m.scrollTop=m.scrollHeight;
+}
+function showTyping(){
+  var m=document.getElementById('chatMsgs');
+  var d=document.createElement('div');d.className='msg msg-bot msg-typing';d.id='typing';
+  d.innerHTML='<span></span><span></span><span></span>';m.appendChild(d);m.scrollTop=m.scrollHeight;
+}
+function hideTyping(){var t=document.getElementById('typing');if(t)t.remove();}
+function sendMsg(txt){
+  var inp=document.getElementById('chatInp');
+  var msg=(txt||inp.value).trim();if(!msg)return;
+  if(!txt)inp.value='';
+  addMsg(msg,'user');showTyping();
+  setTimeout(function(){
+    hideTyping();
+    var r=getBotReply(msg);
+    if(r){addMsg(r,'bot');setPhotonState('speaking');setTimeout(function(){setPhotonState('idle');},2600);}
+  },600+Math.random()*400);
+}
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chatbot').style.display=chatOpen?'flex':'none';
+  if(chatOpen&&!document.getElementById('chatMsgs').children.length){
+    setTimeout(function(){addMsg('سلام! 👋 من فوتونم. هر سوالی درباره های فوتون داری بپرس!','bot');},350);
+  }
+}
+
+// ══════════════════════════════════════════════
+// PERSISTENCE — localStorage user session
+// ══════════════════════════════════════════════
+var USER_KEY='hiphoton_user_v1';
+var REFER_KEY='hiphoton_ref_';
+
+function saveUser(data){
+  try{localStorage.setItem(USER_KEY,JSON.stringify(data));}catch(e){}
+}
+function loadUser(){
+  try{var d=localStorage.getItem(USER_KEY);return d?JSON.parse(d):null;}catch(e){return null;}
+}
+function saveRef(refCode,count,energy){
+  try{localStorage.setItem(REFER_KEY+refCode,JSON.stringify({count:count,energy:energy}));}catch(e){}
+}
+function loadRef(refCode){
+  try{var d=localStorage.getItem(REFER_KEY+refCode);return d?JSON.parse(d):{count:0,energy:0};}catch(e){return {count:0,energy:0};}}
+
+// Generate cryptographically secure referral code
+function genRefCode(){
+  var arr=new Uint8Array(9);
+  try{window.crypto.getRandomValues(arr);}
+  catch(e){for(var i=0;i<9;i++)arr[i]=Math.floor(Math.random()*256);}
+  var chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var code='HP';
+  for(var j=0;j<8;j++)code+=chars[arr[j]%chars.length];
+  return code;
+}
+
+// ══════════════════════════
+// REFERRAL SYSTEM
+// ══════════════════════════
+var SITE_BASE = window.location.href.split('?')[0];
+var urlParams = new URLSearchParams(window.location.search);
+var incomingRef = urlParams.get('ref')||'';
+
+function getUserShareLink(refCode){
+  return SITE_BASE+'?ref='+refCode;
+}
+
+function applyReferralBonus(refCode){
+  if(!refCode) return;
+  // Track in localStorage (in a real app this would be server-side)
+  var rd=loadRef(refCode);
+  rd.count+=1; rd.energy+=10;
+  saveRef(refCode, rd.count, rd.energy);
+  // If the current user is the referrer (same device), add energy
+  var u=loadUser();
+  if(u && u.refCode===refCode){
+    u.energy=u.energy+10;
+    u.referralCount=(u.referralCount||0)+1;
+    saveUser(u);
+    energyReg=true; eUsed=u.energyUsed||0; eTotal=u.energy;
+    updateEnergy();
+    addNotif('🎁','یه دوست با لینک شما عضو شد! ۱۰ واحد انرژی هدیه گرفتید.');
+  }
+}
+
+// Check if someone arrived via referral
+if(incomingRef){
+  setTimeout(function(){ applyReferralBonus(incomingRef); }, 2000);
+}
+
+// ══════════════════════════════════════════════
+// SESSION RESTORE — on page load check localStorage
+// ══════════════════════════════════════════════
+(function restoreSession(){
+  var u=loadUser();
+  if(!u||!u.registered) return;
+  // Restore user state
+  energyReg=true;
+  eUsed=u.energyUsed||0;
+  eTotal=u.energy||100;
+  // Update referral stats from stored data
+  if(u.refCode){
+    var rd=loadRef(u.refCode);
+    if(rd.count>0){eTotal=u.energy+rd.energy;u.energy=eTotal;saveUser(u);}
+  }
+  updateEnergy();
+  // Show profile pill
+  showProfilePill(u.phone||'');
+  // Show welcome back notification
+  var displayName=u.name!=='—'?u.name:'کاربر عزیز';
+  setTimeout(function(){
+    addNotif('👋','خوش برگشتی '+displayName+'! انرژی شما: '+eTotal+' واحد');
+  },1200);
+  // Show profile pill with phone number
+  if(u.phone){showProfilePill(u.phone);}
+  // Update nav greeting if name exists
+  if(u.name && u.name!=='—'){
+    var logoEl=document.querySelector('.nav-logo-text');
+    if(logoEl) logoEl.setAttribute('title','خوش آمدی '+u.name+'!');
+  }
+})();
+
+// ══════════════════════════
+// MODAL / SIGNUP / SURVEY
+// ══════════════════════════
+function openModal(){
+  document.getElementById('signup-overlay').classList.add('open');
+  var u=loadUser();
+  if(u&&u.registered){showView('vSuccess');}
+}
+function closeModal(){document.getElementById('signup-overlay').classList.remove('open');}
+function showView(id){
+  ['vContact','vSurvey','vSuccess'].forEach(function(v){document.getElementById(v).style.display=v===id?'block':'none';});
+}
+var pendingC={name:'—',email:'—',phone:''};
+var svAns={q1:[],q2:null,q3:null,q4:null,q5:null,q6:null,q7:''};
+var svStep=1,svTotal=7;
+function doSignup(){
+  var ph=document.getElementById('mphone').value.replace(/\D/g,'');
+  var inp=document.getElementById('mphone'),pe=document.getElementById('phoneErr');
+  if(ph.length<10){inp.classList.add('err');pe.style.display='block';return;}
+  inp.classList.remove('err');pe.style.display='none';
+  pendingC.name=document.getElementById('mname').value.trim()||'—';
+  pendingC.email=document.getElementById('memail').value.trim()||'—';
+  pendingC.phone=document.getElementById('mphone').value.trim();
+  showView('vSurvey');svStep=1;updateSvProg();
+}
+
+// ── Survey "other" — popup modal approach ──
+var _otherCtx={q:null,type:null,btn:null};
+
+function svMultiOther(btn,inpId){
+  // If already selected, deselect and clear
+  if(btn.classList.contains('sel')){
+    btn.classList.remove('sel');
+    var q=btn.dataset.q;
+    svAns['q'+q]=(svAns['q'+q]||[]).filter(function(x){return x.indexOf('other:')===-1;});
+    // Reset button label
+    btn.innerHTML='<span class="sv-opt-ic">✏️</span>موارد دیگر...';
+    return;
+  }
+  // Open modal
+  _otherCtx={q:btn.dataset.q,type:'multi',btn:btn,confirmed:false};
+  var existing='';
+  var arr=svAns['q'+btn.dataset.q]||[];
+  arr.forEach(function(x){if(x.indexOf('other:')===0)existing=x.replace('other:','');});
+  openOtherModal('موارد دیگر را بنویسید',existing);
+}
+function svSingleOther(btn,inpId){
+  // Deselect all in this group first
+  var parent=btn.closest('.sv-opts')||btn.parentElement;
+  parent.querySelectorAll('.sv-opt').forEach(function(b){b.classList.remove('sel');});
+  btn.classList.add('sel');
+  var q=btn.dataset.q;
+  _otherCtx={q:q,type:'single',btn:btn,confirmed:false};
+  var cur=svAns['q'+q];
+  var existing=(cur&&typeof cur==='string'&&cur.indexOf('other:')===0)?cur.slice(6):'';
+  openOtherModal('پاسخ دلخواه خود را بنویسید',existing);
+}
+function openOtherModal(title,prefill){
+  document.getElementById('otherModalTitle').textContent=title||'پاسخ دیگری دارید؟';
+  var ta=document.getElementById('otherModalInput');
+  ta.value=prefill||'';
+  updateOtherChar();
+  document.getElementById('otherModal').classList.add('open');
+  setTimeout(function(){ta.focus();},200);
+}
+function updateOtherChar(){
+  var ta=document.getElementById('otherModalInput');
+  var cc=document.getElementById('otherCharCount');
+  if(ta&&cc){var n=ta.value.length;cc.textContent=n>0?n+' کاراکتر':'اینجا بنویسید...';}
+}
+// wire char counter on input
+document.addEventListener('DOMContentLoaded',function(){
+  var ta=document.getElementById('otherModalInput');
+  if(ta)ta.addEventListener('input',updateOtherChar);
+});
+function closeOtherModal(){
+  document.getElementById('otherModal').classList.remove('open');
+  // if btn was selected and user cancels, deselect it
+  if(_otherCtx.btn && !_otherCtx.confirmed) _otherCtx.btn.classList.remove('sel');
+  _otherCtx={q:null,type:null,btn:null,confirmed:false};
+}
+function confirmOtherModal(){
+  var val=document.getElementById('otherModalInput').value.trim();
+  if(!val){document.getElementById('otherModalInput').focus();return;}
+  if(_otherCtx.type==='multi'){
+    var arr=svAns['q'+_otherCtx.q]||[];
+    arr=arr.filter(function(x){return x.indexOf('other:')===-1;});
+    arr.push('other:'+val);
+    svAns['q'+_otherCtx.q]=arr;
+    if(_otherCtx.btn){_otherCtx.btn.classList.add('sel');_otherCtx.btn.querySelector('.sv-opt-ic').textContent='✏️';
+      // show preview on button
+      _otherCtx.btn.innerHTML='<span class="sv-opt-ic">✏️</span>'+val.substring(0,30)+(val.length>30?'…':'');
+    }
+  } else {
+    svAns['q'+_otherCtx.q]='other:'+val;
+    if(_otherCtx.btn){
+      _otherCtx.btn.parentElement.querySelectorAll('.sv-opt').forEach(function(b){b.classList.remove('sel');});
+      _otherCtx.btn.classList.add('sel');
+      _otherCtx.btn.innerHTML='<span class="sv-opt-ic">✏️</span>'+val.substring(0,30)+(val.length>30?'…':'');
+    }
+  }
+  _otherCtx.confirmed = true;
+  document.getElementById('otherModal').classList.remove('open');
+  _otherCtx = {q:null, type:null, btn:null, confirmed:false};
+}
+// dummy handlers (inputs now use modal)
+function svOtherInput(){}
+function svOtherInputSingle(){}
+// svOtherSend: called by inline send btn (now redirects to modal confirm)
+function svOtherSend(q,inpId){
+  var inp=document.getElementById(inpId);
+  if(!inp) return;
+  var val=inp.value.trim();
+  if(!val){inp.focus();return;}
+  var isArr=Array.isArray(svAns['q'+q]);
+  if(isArr){
+    var arr=(svAns['q'+q]||[]).filter(function(x){return x.indexOf('other:')===-1;});
+    arr.push('other:'+val);
+    svAns['q'+q]=arr;
+  } else {
+    svAns['q'+q]=val;
+  }
+  // Visual feedback on send button
+  var sb=document.getElementById(inpId+'Btn');
+  if(sb){
+    sb.textContent='✓ ثبت شد';
+    sb.disabled=true;
+    sb.style.background='linear-gradient(135deg,#4ade80,#22d3ee)';
+  }
+  // Update the "other" option button label
+  var step=inp.closest('.sv-step');
+  if(step){
+    var ob=step.querySelector('.sv-opt-other');
+    if(ob){
+      ob.classList.add('sel');
+      ob.innerHTML='<span class="sv-opt-ic">✏️</span>'+val.substring(0,28)+(val.length>28?'…':'');
+    }
+  }
+}
+
+function svMulti(btn){
+  if(btn.classList.contains('sv-opt-other')) return;
+  btn.classList.toggle('sel');
+  var v=btn.dataset.v,arr=svAns['q'+btn.dataset.q];
+  if(btn.classList.contains('sel')){if(arr.indexOf(v)===-1)arr.push(v);}
+  else{svAns['q'+btn.dataset.q]=arr.filter(function(x){return x!==v;});}
+}
+function svSingle(btn){
+  if(btn.classList.contains('sv-opt-other')) return;
+  btn.parentElement.querySelectorAll('.sv-opt').forEach(function(b){b.classList.remove('sel');});
+  // hide other inputs
+  btn.closest('.sv-step').querySelectorAll('.sv-other-inp').forEach(function(i){i.style.display='none';});
+  btn.classList.add('sel');
+  svAns['q'+btn.dataset.q]=btn.dataset.v;
+}
+function updateSvProg(){
+  var pct=Math.round(svStep/svTotal*100);
+  document.getElementById('svFill').style.width=pct+'%';
+  document.getElementById('svLbl').textContent='سوال '+svStep+' از '+svTotal;
+  document.getElementById('svPct').textContent=pct+'٪';
+}
+function svNext(cur){
+  // q1 is multi-select array
+  if(cur===1&&svAns.q1.length===0){svShake(cur);return;}
+  // q2-q6 single select - accept string value including 'other:...'
+  if(cur>=2&&cur<=6){
+    var v=svAns['q'+cur];
+    if(!v||v===''){svShake(cur);return;}
+  }
+  document.getElementById('s'+cur).classList.remove('active');
+  document.getElementById('s'+(cur+1)).classList.add('active');
+  svStep=cur+1;updateSvProg();
+}
+function svPrev(cur){document.getElementById('s'+cur).classList.remove('active');document.getElementById('s'+(cur-1)).classList.add('active');svStep=cur-1;updateSvProg();}
+function svShake(step){var c=document.getElementById('s'+step);c.style.animation='none';requestAnimationFrame(function(){c.style.animation='svShake .35s';});}
+function svSkip(){finalize();}
+function svSubmit(){svAns.q7=document.getElementById('svComment').value.trim();finalize();}
+function finalize(){
+  var btn=document.getElementById('svSubmitBtn');if(btn){btn.disabled=true;btn.textContent='⏳ ثبت...';}
+  var refCode=genRefCode();
+  var now=new Date().toLocaleString('fa-IR');
+  var referredBy=incomingRef||'—';
+  // Build full params including all survey answers + referral info
+  var params={
+    to_email:ADMIN_EMAIL,
+    from_name:'های فوتون — ثبت‌نام جدید',
+    user_name:pendingC.name,
+    user_phone:pendingC.phone,
+    user_email:pendingC.email,
+    signup_time:now,
+    ref_code:refCode,
+    referred_by:referredBy,
+    reply_to:pendingC.email!=='—'?pendingC.email:ADMIN_EMAIL,
+    survey_q1:(Array.isArray(svAns.q1)?svAns.q1.join('، '):svAns.q1)||'—',
+    survey_q2:svAns.q2||'—',
+    survey_q3:svAns.q3||'—',
+    survey_q4:svAns.q4||'—',
+    survey_q5:svAns.q5||'—',
+    survey_q6:svAns.q6||'—',
+    survey_q7:svAns.q7||'—'
+  };
+  // Save user to localStorage
+  var userData={
+    registered:true, name:pendingC.name, email:pendingC.email,
+    phone:pendingC.phone, refCode:refCode, energy:100,
+    energyUsed:0, referralCount:0, signupTime:now
+  };
+  // If arrived via referral, give referrer bonus
+  if(incomingRef) applyReferralBonus(incomingRef);
+  saveUser(userData);
+  // Send email
+  try{emailjs.send(EJS_SERVICE,EJS_TEMPLATE,params).then(function(){done(refCode);}).catch(function(){done(refCode);});}
+  catch(e){done(refCode);}
+}
+function showProfilePill(phone){
+  var pill=document.getElementById('nProfile');
+  var ph=document.getElementById('nProfilePhone');
+  if(!pill||!phone)return;
+  ph.textContent=phone;
+  pill.style.display='flex';
+}
+function done(refCode){
+  energyReg=true;eUsed=0;eTotal=100;updateEnergy();
+  var refLink=getUserShareLink(refCode||'');
+  var shareEl=document.getElementById('shareUrlTxt');
+  if(shareEl)shareEl.textContent=refLink;
+  SURL=refLink;
+  showView('vSuccess');
+  showProfilePill(pendingC.phone);
+  addNotif('🎉','ثبت‌نام با موفقیت انجام شد!');
+  setTimeout(function(){addNotif('⚡','۱۰۰ واحد انرژی رایگان به حسابت اضافه شد!');},1200);
+  setTimeout(function(){addNotif('🔗','لینک دعوت شما آماده است! با دعوت دوستان ۱۰ واحد هدیه بگیرید.');},2500);
+}
+// Shake keyframe
+(function(){var s=document.createElement('style');s.textContent='@keyframes svShake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}';document.head.appendChild(s);})();
+
+// ══════════════════════════
+// SCROLL REVEAL
+// ══════════════════════════
+var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+
+// ══════════════════════════
+// COUNTER
+// ══════════════════════════
+var co=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var t=+e.target.dataset.count,c=0,s=t/55,tm=setInterval(function(){c=Math.min(c+s,t);e.target.textContent=Math.round(c);if(c>=t)clearInterval(tm);},16);co.unobserve(e.target);}});},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(function(el){co.observe(el);});
+</script>
+
+<!-- OTHER ANSWER MODAL -->
+<div id="otherModal" onclick="if(event.target===this)closeOtherModal()">
+  <div class="other-modal-box">
+    <div class="other-modal-icon">✏️</div>
+    <div class="other-modal-title" id="otherModalTitle">پاسخ دیگری دارید؟</div>
+    <div class="other-modal-sub">آنچه در ذهن دارید را بنویسید — هر پاسخی ارزشمند است</div>
+    <textarea class="other-modal-textarea" id="otherModalInput" placeholder="پاسخ خود را اینجا بنویسید..." rows="5"></textarea>
+    <div class="other-modal-char" id="otherCharCount">۰ کاراکتر</div>
+    <div class="other-modal-btns">
+      <button class="other-modal-confirm" onclick="confirmOtherModal()">
+        <span>✓</span> ثبت پاسخ
+      </button>
+      <button class="other-modal-cancel" onclick="closeOtherModal()">انصراف</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
